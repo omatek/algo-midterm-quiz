@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insertion Sort Quiz</title>
+    <title>Sorting Algorithm Quizzes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #dcedf0; /* Light blue-grey background */
+            background-color: #dcedf0;
             display: flex;
             padding: 20px;
             margin: 0;
@@ -22,6 +22,7 @@
             width: 150px;
             height: fit-content;
             margin-right: 20px;
+            flex-shrink: 0;
         }
         .sidebar h2 { margin: 0 0 5px 0; font-weight: normal; color: #555; }
         .sidebar h2 span { font-size: 24px; font-weight: bold; color: #333; display: block; }
@@ -31,6 +32,13 @@
         /* Main content styling */
         .main-content {
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .question-container {
+            background-color: transparent;
         }
 
         .instruction-box {
@@ -42,10 +50,26 @@
             display: inline-block;
         }
 
+        .bubble-header-info {
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .array-boxes span {
+            border: 2px solid black;
+            padding: 4px 8px;
+            margin-left: -2px; /* overlap borders */
+            background-color: white;
+            display: inline-block;
+        }
+
         /* Table styling */
         table {
             border-collapse: collapse;
             background-color: white;
+            border: 2px solid black;
         }
         
         th, td {
@@ -56,13 +80,24 @@
 
         th {
             font-weight: bold;
+            background-color: #d9d9d9;
         }
 
-        .header-insert { background-color: #ffc000; width: 60px; } /* Yellow */
-        .header-array { background-color: #d9d9d9; } /* Grey */
+        /* Insertion Sort Specifics */
+        .header-insert { background-color: #ffc000; width: 60px; }
         .insert-col { font-weight: bold; font-size: 16px; }
-        .done-row td.insert-col { background-color: yellow; color: red; font-weight: bold; }
-        .done-row input { background-color: #cce5ff; } /* Light blue inputs for Done row */
+        .done-row-insertion td.insert-col { background-color: yellow; color: red; font-weight: bold; }
+        .done-row-insertion input { background-color: #cce5ff; }
+        .empty-cell { border: none; background-color: transparent; }
+
+        /* Bubble Sort Specifics */
+        .bubble-pass-col { background-color: #dce6f1; font-weight: bold; width: 40px; }
+        .bubble-op-col { background-color: #dce6f1; width: 140px; }
+        .bubble-init-array { background-color: #e2f0d9; font-weight: bold; }
+        .bubble-title-cell { background-color: yellow; font-weight: bold; text-align: center; }
+        .pass-end { border-bottom: 3px solid black; } /* Thick border between passes */
+        .done-row-bubble td.bubble-title-cell { color: red; }
+        .done-row-bubble input { background-color: #fff2cc; }
 
         /* Input boxes */
         input[type="text"] {
@@ -73,18 +108,44 @@
             border-radius: 4px;
             font-size: 14px;
         }
+        .bubble-op-col input[type="text"] {
+            width: 90%;
+            font-size: 11px;
+            height: 20px;
+        }
         input[type="text"]:focus {
             outline: 2px solid #0066cc;
             border-color: #0066cc;
         }
-        
-        /* Hide borders for empty cells outside the current array size */
-        .empty-cell { border: none; background-color: transparent; }
 
         /* Controls */
-        .controls { margin-top: 20px; }
-        button { padding: 10px 15px; font-size: 14px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; }
+        .controls { 
+            position: sticky;
+            bottom: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button { padding: 10px 15px; font-size: 14px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; font-weight: bold;}
         button:hover { background: #0052a3; }
+        .clear-btn { background-color: #dc3545; }
+        .clear-btn:hover { background-color: #c82333; }
+
+        /* Tabs and Validation */
+        .tab-nav { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; cursor: pointer; background: #e0e0e0; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; }
+        .tab-btn.active { background: #0066cc; color: white; border-color: #0052a3; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
+        .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; }
+        .feedback { margin-left: 15px; font-weight: bold; align-self: center; }
     </style>
 </head>
 <body>
@@ -97,36 +158,84 @@
     </div>
 
     <div class="main-content">
-        <div class="instruction-box">
-            Insert the following elements <strong>32, 27, 23, 15, 19, 17, 15, 12</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong> algorithm.<br>
-            Showing your solution step by step.
+        
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('insertion-q', this, '7')">Question 7: Insertion Sort</button>
+            <button class="tab-btn" onclick="switchTab('bubble-q', this, '8')">Question 8: Bubble Sort</button>
         </div>
 
-        <table id="quiz-table">
-            <thead>
-                <tr>
-                    <th class="header-insert">Inset</th> <!-- Kept the typo from your image -->
-                    <th class="header-array" colspan="8">Array</th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
-                <!-- Rows injected by JavaScript -->
-            </tbody>
-        </table>
+        <!-- =================== INSERTION SORT QUESTION =================== -->
+        <div id="insertion-q" class="tab-content active">
+            <div class="question-container">
+                <div class="instruction-box">
+                    Insert the following elements <strong>32, 27, 23, 15, 19, 17, 15, 12</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong> algorithm.<br>
+                    Showing your solution step by step.
+                </div>
 
+                <table id="insertion-table">
+                    <thead>
+                        <tr>
+                            <th class="header-insert">Inset</th>
+                            <th colspan="8">Array</th>
+                        </tr>
+                    </thead>
+                    <tbody id="insertion-body">
+                        <!-- JavaScript injected -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- =================== BUBBLE SORT QUESTION =================== -->
+        <div id="bubble-q" class="tab-content">
+            <div class="question-container">
+                <div class="bubble-header-info">
+                    <span style="margin-right: 20px;">Apply <strong style="color: red;">Bubble_Sort</strong> algorithm on array A.</span>
+                    <div class="array-boxes">
+                        <span>17</span><span>11</span><span>15</span><span>34</span><span>65</span><span>41</span><span>26</span><span>9</span>
+                    </div>
+                </div>
+                <div style="font-weight: bold; font-size: 14px; margin-bottom: 5px; text-align: center; width: fit-content;">
+                    Show step by step how Bubble_Sort works.
+                </div>
+
+                <table id="bubble-table">
+                    <thead>
+                        <tr>
+                            <th>Pass</th>
+                            <th>Operation</th>
+                            <th colspan="8">Array</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bubble-body">
+                        <!-- JavaScript injected -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Global Controls -->
         <div class="controls">
-            <button onclick="fillAnswers()">Show Solution</button>
-            <button onclick="clearAnswers()" style="background-color: #dc3545;">Clear</button>
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="fillAnswers()" style="background-color: #6c757d;">Show Solution</button>
+            <button class="clear-btn" onclick="clearAnswers()">Clear</button>
+            <span id="feedback-msg" class="feedback"></span>
         </div>
+
     </div>
 
     <script>
-        const elements = [32, 27, 23, 15, 19, 17, 15, 12];
-        const tbody = document.getElementById('table-body');
-        let sortedArray = [];
-        let allInputs = []; // To store references for the solution button
+        // Global array to track all inputs for the Solution/Clear buttons
+        let allInputs = [];
 
-        function generateTable() {
+        // ==========================================
+        // 1. INSERTION SORT LOGIC
+        // ==========================================
+        function generateInsertionTable() {
+            const elements = [32, 27, 23, 15, 19, 17, 15, 12];
+            const tbody = document.getElementById('insertion-body');
+            let sortedArray = [];
+
             for (let i = 0; i < elements.length; i++) {
                 let key = elements[i];
                 let steps = getInsertionSteps(key, sortedArray);
@@ -135,7 +244,6 @@
                 for (let s = 0; s < steps.length; s++) {
                     let tr = document.createElement('tr');
                     
-                    // Insert column (with rowspan)
                     if (s === 0) {
                         let tdInsert = document.createElement('td');
                         tdInsert.className = 'insert-col';
@@ -144,15 +252,13 @@
                         tr.appendChild(tdInsert);
                     }
 
-                    // Array columns
                     for (let c = 0; c < elements.length; c++) {
                         let td = document.createElement('td');
                         if (c < steps[s].length) {
                             let input = document.createElement('input');
                             input.type = 'text';
-                            input.dataset.answer = steps[s][c]; // Store the correct answer
+                            input.dataset.answer = steps[s][c];
                             
-                            // The very first box in the screenshot is just text, not an input
                             if (i === 0 && c === 0) {
                                 td.innerText = steps[s][c];
                             } else {
@@ -168,9 +274,8 @@
                 }
             }
 
-            // Add the final "Done" row
             let finalTr = document.createElement('tr');
-            finalTr.className = 'done-row';
+            finalTr.className = 'done-row-insertion';
             let tdDone = document.createElement('td');
             tdDone.className = 'insert-col';
             tdDone.innerText = 'Done';
@@ -188,26 +293,22 @@
             tbody.appendChild(finalTr);
         }
 
-        // Logic to calculate exact sub-steps of Insertion Sort shifts
         function getInsertionSteps(key, arr) {
             let steps = [];
             let j = arr.length - 1;
 
-            // Base case: empty array
             if (j < 0) {
                 steps.push([key]);
                 arr.push(key);
                 return steps;
             }
 
-            // If it's already larger than the max, just append
             if (arr[j] <= key) {
                 steps.push([...arr, key]);
                 arr.push(key);
                 return steps;
             }
 
-            // Shifting logic mapped to the screenshot's visual format
             let current = [...arr, arr[j]]; 
             steps.push([...current]);
 
@@ -222,28 +323,192 @@
                 j--;
             }
 
-            // Update original array reference for the next number in the loop
             arr.length = 0;
             arr.push(...current);
-            
             return steps;
         }
 
-        // Helper functions for the buttons
-        function fillAnswers() {
-            allInputs.forEach(input => {
-                input.value = input.dataset.answer;
+        // ==========================================
+        // 2. BUBBLE SORT LOGIC
+        // ==========================================
+        function generateBubbleTable() {
+            const initialArr = [17, 11, 15, 34, 65, 41, 26, 9];
+            let arr = [...initialArr];
+            const tbody = document.getElementById('bubble-body');
+            
+            // Initial row
+            let trInit = document.createElement('tr');
+            trInit.innerHTML = `<td class="bubble-title-cell" colspan="2">Bubble_Sort(<br>A[], 1, 8 )</td>`;
+            initialArr.forEach(val => {
+                trInit.innerHTML += `<td class="bubble-init-array">${val}</td>`;
             });
+            tbody.appendChild(trInit);
+
+            let passNum = 1;
+            // Bubble sort logic: n-1 passes
+            for (let i = 0; i < initialArr.length - 1; i++) {
+                let stepsInPass = initialArr.length - i - 1;
+                
+                for (let j = 0; j < stepsInPass; j++) {
+                    let tr = document.createElement('tr');
+                    
+                    // Add thick border at the bottom of the last step of a pass
+                    if (j === stepsInPass - 1) {
+                        tr.classList.add('pass-end');
+                    }
+                    
+                    // Pass Column
+                    if (j === 0) {
+                        let tdPass = document.createElement('td');
+                        tdPass.rowSpan = stepsInPass;
+                        tdPass.innerText = passNum;
+                        tdPass.className = 'bubble-pass-col';
+                        tr.appendChild(tdPass);
+                    }
+
+                    // Compute current operation and mutate array
+                    let opText = "";
+                    if (arr[j] > arr[j+1]) {
+                        opText = `(A[${j+1}] > A[${j+2}]) -> Swap(A[${j+1}],A[${j+2}])`;
+                        let temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                    } else {
+                        opText = `(A[${j+1}] < A[${j+2}]) -> No Swap`; // Alternative to leave blank
+                    }
+
+                    // Operation Column
+                    let tdOp = document.createElement('td');
+                    tdOp.className = 'bubble-op-col';
+                    
+                    // The first operation in Pass 1 is pre-filled as text based on the image
+                    if (passNum === 1 && j === 0) {
+                        tdOp.innerHTML = `<span style="font-size: 11px;">(A[1] > A[2])<br>&rarr;Swap(A[1],A[2])</span>`;
+                    } else {
+                        let inputOp = document.createElement('input');
+                        inputOp.type = 'text';
+                        // Only auto-fill swaps to match typical worksheets, or fill all ops.
+                        inputOp.dataset.answer = arr[j] > arr[j+1] ? "" : opText; 
+                        inputOp.dataset.answer = opText; 
+                        allInputs.push(inputOp);
+                        tdOp.appendChild(inputOp);
+                    }
+                    tr.appendChild(tdOp);
+
+                    // Array Columns
+                    for (let k = 0; k < arr.length; k++) {
+                        let tdArr = document.createElement('td');
+                        // The first array output in Pass 1 is pre-filled as text based on the image
+                        if (passNum === 1 && j === 0) {
+                            tdArr.innerText = arr[k];
+                            tdArr.style.fontWeight = 'bold';
+                        } else {
+                            let inputArr = document.createElement('input');
+                            inputArr.type = 'text';
+                            inputArr.dataset.answer = arr[k];
+                            allInputs.push(inputArr);
+                            tdArr.appendChild(inputArr);
+                        }
+                        tr.appendChild(tdArr);
+                    }
+                    
+                    tbody.appendChild(tr);
+                }
+                passNum++;
+            }
+
+            // Final Result Row
+            let trFinal = document.createElement('tr');
+            trFinal.className = 'done-row-bubble';
+            trFinal.innerHTML = `<td class="bubble-title-cell" colspan="2">Result<br>Sorted Array</td>`;
+            arr.forEach(val => {
+                let td = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.answer = val;
+                allInputs.push(input);
+                td.appendChild(input);
+                trFinal.appendChild(td);
+            });
+            tbody.appendChild(trFinal);
+        }
+
+        // ==========================================
+        // 3. GLOBAL CONTROLS
+        // ==========================================
+        function switchTab(tabId, btnElement, qNumber) {
+            // Swap active classes for tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+            
+            // Update sidebar question number
+            document.querySelector('.sidebar h2 span').innerText = qNumber;
+            document.getElementById('feedback-msg').innerText = '';
+        }
+
+        function checkAnswers() {
+            const activeTab = document.querySelector('.tab-content.active');
+            const inputs = activeTab.querySelectorAll('input[type="text"]');
+            let allCorrect = true;
+            let emptyCount = 0;
+
+            inputs.forEach(input => {
+                input.classList.remove('correct', 'incorrect');
+                
+                // Allow user flexibility with spaces inside their answer
+                const val = input.value.trim().replace(/\s+/g, '');
+                const ans = input.dataset.answer.replace(/\s+/g, '');
+                
+                if (!val) {
+                    emptyCount++;
+                    allCorrect = false;
+                } else if (val === ans) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-msg');
+            if (emptyCount === inputs.length && inputs.length > 0) {
+                feedback.innerText = "Try answering first!";
+                feedback.style.color = "#dc3545";
+            } else if (allCorrect) {
+                feedback.innerText = "Perfect! Everything looks good.";
+                feedback.style.color = "#28a745";
+            } else {
+                feedback.innerText = "Some answers are incorrect or missing. Keep trying!";
+                feedback.style.color = "#dc3545";
+            }
+        }
+
+        function fillAnswers() {
+            const activeTab = document.querySelector('.tab-content.active');
+            const inputs = activeTab.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                input.value = input.dataset.answer;
+                input.classList.remove('correct', 'incorrect');
+            });
+            document.getElementById('feedback-msg').innerText = '';
         }
 
         function clearAnswers() {
-            allInputs.forEach(input => {
+            const activeTab = document.querySelector('.tab-content.active');
+            const inputs = activeTab.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
                 input.value = '';
+                input.classList.remove('correct', 'incorrect');
             });
+            document.getElementById('feedback-msg').innerText = '';
         }
 
-        // Initialize
-        generateTable();
+        // Initialize both
+        generateInsertionTable();
+        generateBubbleTable();
     </script>
 </body>
 </html>
