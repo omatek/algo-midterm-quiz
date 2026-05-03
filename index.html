@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertion Sort Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dcedf0; /* Light blue-grey background */
+            display: flex;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 150px;
+            height: fit-content;
+            margin-right: 20px;
+        }
+        .sidebar h2 { margin: 0 0 5px 0; font-weight: normal; color: #555; }
+        .sidebar h2 span { font-size: 24px; font-weight: bold; color: #333; display: block; }
+        .sidebar p { font-size: 12px; color: #666; margin: 10px 0; }
+        .flag { color: #0066cc; cursor: pointer; text-decoration: none; font-size: 12px;}
+
+        /* Main content styling */
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .instruction-box {
+            background-color: #f1f5f9;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            background-color: white;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 4px;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        .header-insert { background-color: #ffc000; width: 60px; } /* Yellow */
+        .header-array { background-color: #d9d9d9; } /* Grey */
+        .insert-col { font-weight: bold; font-size: 16px; }
+        .done-row td.insert-col { background-color: yellow; color: red; font-weight: bold; }
+        .done-row input { background-color: #cce5ff; } /* Light blue inputs for Done row */
+
+        /* Input boxes */
+        input[type="text"] {
+            width: 35px;
+            height: 25px;
+            text-align: center;
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="text"]:focus {
+            outline: 2px solid #0066cc;
+            border-color: #0066cc;
+        }
+        
+        /* Hide borders for empty cells outside the current array size */
+        .empty-cell { border: none; background-color: transparent; }
+
+        /* Controls */
+        .controls { margin-top: 20px; }
+        button { padding: 10px 15px; font-size: 14px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0052a3; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Question <span>7</span></h2>
+        <p>Not yet answered</p>
+        <p>Marked out of 185.00</p>
+        <a href="#" class="flag">⚑ Flag question</a>
+    </div>
+
+    <div class="main-content">
+        <div class="instruction-box">
+            Insert the following elements <strong>32, 27, 23, 15, 19, 17, 15, 12</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong> algorithm.<br>
+            Showing your solution step by step.
+        </div>
+
+        <table id="quiz-table">
+            <thead>
+                <tr>
+                    <th class="header-insert">Inset</th> <!-- Kept the typo from your image -->
+                    <th class="header-array" colspan="8">Array</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Rows injected by JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="controls">
+            <button onclick="fillAnswers()">Show Solution</button>
+            <button onclick="clearAnswers()" style="background-color: #dc3545;">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        const elements = [32, 27, 23, 15, 19, 17, 15, 12];
+        const tbody = document.getElementById('table-body');
+        let sortedArray = [];
+        let allInputs = []; // To store references for the solution button
+
+        function generateTable() {
+            for (let i = 0; i < elements.length; i++) {
+                let key = elements[i];
+                let steps = getInsertionSteps(key, sortedArray);
+                let rowspan = steps.length;
+
+                for (let s = 0; s < steps.length; s++) {
+                    let tr = document.createElement('tr');
+                    
+                    // Insert column (with rowspan)
+                    if (s === 0) {
+                        let tdInsert = document.createElement('td');
+                        tdInsert.className = 'insert-col';
+                        tdInsert.rowSpan = rowspan;
+                        tdInsert.innerText = key;
+                        tr.appendChild(tdInsert);
+                    }
+
+                    // Array columns
+                    for (let c = 0; c < elements.length; c++) {
+                        let td = document.createElement('td');
+                        if (c < steps[s].length) {
+                            let input = document.createElement('input');
+                            input.type = 'text';
+                            input.dataset.answer = steps[s][c]; // Store the correct answer
+                            
+                            // The very first box in the screenshot is just text, not an input
+                            if (i === 0 && c === 0) {
+                                td.innerText = steps[s][c];
+                            } else {
+                                allInputs.push(input);
+                                td.appendChild(input);
+                            }
+                        } else {
+                            td.className = 'empty-cell';
+                        }
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+            }
+
+            // Add the final "Done" row
+            let finalTr = document.createElement('tr');
+            finalTr.className = 'done-row';
+            let tdDone = document.createElement('td');
+            tdDone.className = 'insert-col';
+            tdDone.innerText = 'Done';
+            finalTr.appendChild(tdDone);
+
+            for (let c = 0; c < elements.length; c++) {
+                let td = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.dataset.answer = sortedArray[c];
+                allInputs.push(input);
+                td.appendChild(input);
+                finalTr.appendChild(td);
+            }
+            tbody.appendChild(finalTr);
+        }
+
+        // Logic to calculate exact sub-steps of Insertion Sort shifts
+        function getInsertionSteps(key, arr) {
+            let steps = [];
+            let j = arr.length - 1;
+
+            // Base case: empty array
+            if (j < 0) {
+                steps.push([key]);
+                arr.push(key);
+                return steps;
+            }
+
+            // If it's already larger than the max, just append
+            if (arr[j] <= key) {
+                steps.push([...arr, key]);
+                arr.push(key);
+                return steps;
+            }
+
+            // Shifting logic mapped to the screenshot's visual format
+            let current = [...arr, arr[j]]; 
+            steps.push([...current]);
+
+            while (j >= 0 && arr[j] > key) {
+                if (j - 1 >= 0 && arr[j-1] > key) {
+                    current[j] = arr[j-1];
+                    steps.push([...current]);
+                } else {
+                    current[j] = key;
+                    steps.push([...current]);
+                }
+                j--;
+            }
+
+            // Update original array reference for the next number in the loop
+            arr.length = 0;
+            arr.push(...current);
+            
+            return steps;
+        }
+
+        // Helper functions for the buttons
+        function fillAnswers() {
+            allInputs.forEach(input => {
+                input.value = input.dataset.answer;
+            });
+        }
+
+        function clearAnswers() {
+            allInputs.forEach(input => {
+                input.value = '';
+            });
+        }
+
+        // Initialize
+        generateTable();
+    </script>
+</body>
+</html>
