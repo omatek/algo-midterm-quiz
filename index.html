@@ -384,15 +384,8 @@
                     // The first operation in Pass 1 is pre-filled as text based on the image
                     if (passNum === 1 && j === 0) {
                         tdOp.innerHTML = `<span style="font-size: 11px;">(A[1] > A[2])<br>&rarr;Swap(A[1],A[2])</span>`;
-                    } else {
-                        let inputOp = document.createElement('input');
-                        inputOp.type = 'text';
-                        // Only auto-fill swaps to match typical worksheets, or fill all ops.
-                        inputOp.dataset.answer = arr[j] > arr[j+1] ? "" : opText; 
-                        inputOp.dataset.answer = opText; 
-                        allInputs.push(inputOp);
-                        tdOp.appendChild(inputOp);
                     }
+                    // The rest of the operation cells are kept blank as requested
                     tr.appendChild(tdOp);
 
                     // Array Columns
