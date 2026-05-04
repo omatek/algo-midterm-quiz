@@ -162,17 +162,29 @@
         .heap-array-table { margin-top: 10px; border: none; background: transparent; border-collapse: separate; border-spacing: 2px; }
         .heap-array-table td, .heap-array-table th { border: 1px solid #555; background: white; width: 40px; height: 30px; }
         .heap-array-table .index-row td { border: none; background: transparent; color: #0066cc; font-size: 12px; height: 15px; font-weight: bold; }
-        .merge-sub-step { border-bottom: 2px dashed #333; padding: 20px 0; display: flex; flex-direction: column; align-items: center; }
-        .merge-sub-step:last-child { border-bottom: none; }
-        .merge-arr-table td { border: 2px solid #c00000; width: 45px; height: 35px; background: white; font-weight: bold; }
-        .merge-tree-container { display: flex; flex-direction: column; align-items: center; gap: 20px; font-family: monospace; }
-        .mt-row { display: flex; justify-content: center; gap: 40px; }
-        .mt-group { display: flex; gap: 0; border: 2px solid #c00000; background: white; }
-        .mt-cell { width: 40px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-right: 1px solid #ccc; color: #0066cc; }
-        .mt-cell.input-mode input { width: 100%; height: 100%; border: 1px solid #ccc; box-sizing: border-box; margin: 0; border-radius: 0; }
-        .mt-cell.yellow { background-color: #ffff99; }
-        .mt-cell.red-text { color: red; }
         
+        /* Q4 Specifics */
+        .merge-sub-step { padding: 15px 0; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .merge-arr-table { border-collapse: separate; border-spacing: 0; background: transparent; border: none; margin-bottom: 5px; }
+        .merge-arr-table td { border: 2px solid #c00000; width: 50px; height: 35px; background: white; font-weight: bold; text-align: center; color: #0066cc;}
+        .merge-arr-table th { border: none; background: transparent; color: #0066cc; font-size: 12px; font-weight: bold; padding-bottom: 5px; }
+        .merge-arr-table select { width: 100%; height: 100%; border: none; font-weight: bold; color: #0066cc; text-align: center; background: #dce6f1; border-radius: 0; appearance: none; -webkit-appearance: none; cursor: pointer; }
+        .merge-arr-table select:focus { outline: 2px solid #ffc000; background: white; }
+        .q4-pointer { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #555; }
+        .q4-pointer select { width: 35px; height: 22px; font-size: 12px; border: 1px solid #999; }
+        .dashed-divider { width: 100%; border-top: 2px dashed #000; margin: 10px 0; }
+
+        /* Q5 Specifics */
+        .q5-container { position: relative; width: 900px; height: 1100px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #dcedf0; }
+        .q5-node { position: absolute; display: flex; border: 2px solid #c00000; background: white; transform: translateX(-50%); }
+        .q5-cell { width: 40px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-right: 1px solid #ccc; color: #0066cc; }
+        .q5-cell:last-child { border-right: none; }
+        .q5-input { width: 100% !important; height: 100% !important; border: none !important; margin: 0 !important; border-radius: 0 !important; font-weight: bold; text-align: center; box-sizing: border-box; }
+        .q5-input.blue { color: #0066cc; background: white; }
+        .q5-input.red-yellow { color: red; background: #ffff99; }
+        .q5-input.blue-yellow { color: #0066cc; background: #ffff99; }
+        
+        /* Q6 Specifics */
         .qs-table { border: 2px solid #555; background: #dce6f1; }
         .qs-table select { width: 50px; text-align: center; }
         .qs-pointer-row td { border: none; padding: 2px; height: 25px; }
@@ -436,14 +448,19 @@
                     <div id="q3-content" class="heap-wrapper"></div>
                 </div>
 
+                <!-- Q4: MERGE SUBROUTINE (REBUILT WITH EXACT DROPDOWNS) -->
                 <div id="q4-tab" class="tab-content">
-                    <div class="instruction-box"><strong>Merge(A, 1, 4, 8)</strong></div>
-                    <div id="q4-content"></div>
+                    <div class="instruction-box" style="font-weight:bold; font-size:14px; background:white; border:none; padding-bottom:5px;">Merge(A, 1, 4, 8)</div>
+                    <div id="q4-content" style="background:#eef5fa; padding: 20px; border: 1px solid #ccc; overflow-x: auto; width: fit-content; margin: 0 auto;"></div>
                 </div>
 
+                <!-- Q5: MERGE SORT TREE (REBUILT WITH EXACT VISUALS) -->
                 <div id="q5-tab" class="tab-content">
-                    <div class="instruction-box"><strong>Apply Merge_Sort algorithm on array A. Show step by step how Merge_Sort works.</strong></div>
-                    <div id="q5-content" class="merge-tree-container"></div>
+                    <div style="font-weight: bold; font-size:12px; margin-bottom: 20px; display:flex; justify-content:space-between; width: 600px;">
+                        <span>Apply Merge_Sort algorithm on<br>array A.</span>
+                        <span>Show step by step how Merge_Sort works.</span>
+                    </div>
+                    <div id="q5-content" class="q5-container"></div>
                 </div>
 
                 <div id="q6-tab" class="tab-content">
@@ -522,7 +539,6 @@
             document.getElementById(quizId).classList.add('active');
             btnElement.classList.add('active');
             
-            // Auto click first tab of the active quiz
             const firstTabBtn = document.querySelector(`#${quizId} .tab-btn`);
             if(firstTabBtn) firstTabBtn.click();
         }
@@ -543,7 +559,6 @@
         // ==========================================
         function getActiveInputs() {
             const activeTab = document.querySelector('.quiz-container.active .tab-content.active');
-            // Added select dropdowns to validation query
             return activeTab.querySelectorAll('input[type="text"]:not([readonly="readonly"]), input.dd-drop, select');
         }
 
@@ -562,7 +577,6 @@
                 if (val !== "") filledCount++;
 
                 if (ans === "") {
-                    // Intentionally left blank rows (like in Quick Sort)
                     if (val !== "") {
                         input.classList.add('incorrect');
                         allCorrect = false;
@@ -584,7 +598,7 @@
             const feedback = document.getElementById('feedback-msg');
             if (filledCount === 0 && requiresAnswerCount > 0) {
                 feedback.innerText = "Try answering first!"; feedback.style.color = "#dc3545";
-                inputs.forEach(i => i.classList.remove('correct')); // Don't highlight empty blanks if no attempt was made
+                inputs.forEach(i => i.classList.remove('correct'));
             } else if (allCorrect) {
                 feedback.innerText = "Perfect! Everything looks good."; feedback.style.color = "#28a745";
             } else {
@@ -609,7 +623,7 @@
         }
 
         // ==========================================
-        // QUIZ 2 RENDERERS (Heaps, Merge, Sorts)
+        // QUIZ 2 RENDERERS
         // ==========================================
         const treeCoords = {
             1: [400, 20], 2: [200, 80], 3: [600, 80], 4: [100, 150], 5: [300, 150], 6: [500, 150], 7: [700, 150],
@@ -680,80 +694,156 @@
             { title: 'Step 5: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 1, L: 2, R: 3}, isInteractive: true, array: [30, 25, 22, 21, 19, 18, 11, 10, 8, 13, 6] }
         ]);
 
+        // Q4 MERGE SUBROUTINE - REBUILT TO MATCH EXACT VISUAL AND DROPDOWNS
         function initQ4() {
-            let L = [31, 16, 18, 23, '∞'], R = [13, 16, 20, 21, '∞'], A = [31, 16, 18, 23, 13, 16, 20, 21];
-            let html = '', currentI = 1, currentJ = 1;
+            const dropdownOptions = ["", "11", "13", "16", "18", "20", "21", "23", "∞", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            function genSelect(ans) {
+                let s = `<select data-answer="${ans}">`;
+                dropdownOptions.forEach(opt => s += `<option value="${opt}">${opt}</option>`);
+                s += `</select>`; return s;
+            }
 
-            for(let k = 1; k <= 8; k++) {
-                if (L[currentI-1] !== '∞' && (R[currentJ-1] === '∞' || L[currentI-1] <= R[currentJ-1])) { A[k-1] = L[currentI-1]; currentI++; } 
-                else { A[k-1] = R[currentJ-1]; currentJ++; }
+            let L = ["11", "16", "18", "23", "∞"], R = ["13", "16", "20", "21", "∞"], A = ["11", "16", "18", "23", "13", "16", "20", "21"];
+            let currentI = 1, currentJ = 1;
+            let html = '';
 
-                html += `
-                <div class="merge-sub-step">
-                    ${k > 1 ? `<div style="align-self:flex-start; font-weight:bold; color:#777; margin-bottom:10px;">Step ${k-1}</div>` : ''}
-                    <div style="display:flex; align-items:flex-end; gap:10px;">
-                        <span style="font-weight:bold; color:#c00000; margin-bottom:10px;">A</span>
-                        <table class="merge-arr-table">
-                            <thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
-                            <tbody><tr>${A.map(val => `<td><input type="text" data-answer="${val}"></td>`).join('')}</tr></tbody>
-                        </table>
-                    </div>
-                    <div class="pointer-box" style="margin-left:-350px;">k= <input type="text" data-answer="${k}"></div>
-                    <div class="subroutine-inputs">
-                        <div style="display:flex; align-items:flex-end; gap:10px;">
-                            <span style="font-weight:bold; color:#c00000; margin-bottom:10px;">L</span>
-                            <table class="merge-arr-table">
-                                <thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
-                                <tbody><tr>${L.map(val => `<td><input type="text" data-answer="${val}"></td>`).join('')}</tr></tbody>
-                            </table>
-                        </div>
-                        <div style="display:flex; align-items:flex-end; gap:10px;">
-                            <span style="font-weight:bold; color:#c00000; margin-bottom:10px;">R</span>
-                            <table class="merge-arr-table">
-                                <thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
-                                <tbody><tr>${R.map(val => `<td><input type="text" data-answer="${val}"></td>`).join('')}</tr></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap: 200px; margin-top:5px; margin-left:-80px;">
-                        <div class="pointer-box">i= <input type="text" data-answer="${currentI}"></div>
-                        <div class="pointer-box">j= <input type="text" data-answer="${currentJ}"></div>
-                    </div>
-                </div>`;
+            for(let step = 0; step <= 8; step++) {
+                if (step > 0) {
+                    html += `<div class="dashed-divider"></div>`;
+                    if (L[currentI-1] !== '∞' && (R[currentJ-1] === '∞' || parseInt(L[currentI-1]) <= parseInt(R[currentJ-1]))) {
+                        A[step-1] = L[currentI-1]; currentI++;
+                    } else { A[step-1] = R[currentJ-1]; currentJ++; }
+                }
+
+                let k_val = step === 0 ? 1 : step + 1;
+
+                html += `<div class="merge-sub-step">`;
+                if (step > 0) html += `<div style="position:absolute; left:0; top:20px; font-weight:bold; color:#777; font-size:14px;">Step ${step}</div>`;
+                
+                // Array A
+                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
+                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">A</span>`;
+                html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead><tbody><tr>`;
+                if (step === 0) {
+                    A.forEach(val => html += `<td>${val}</td>`); // Static blue text initially
+                } else {
+                    A.forEach(val => html += `<td>${genSelect(val)}</td>`); // Dropdowns for steps
+                }
+                html += `</tr></tbody></table></div>`;
+                
+                // k pointer
+                html += `<div class="q4-pointer" style="margin-left:-360px; margin-top:5px;">k= ${genSelect(k_val)}</div>`;
+                
+                // Sub arrays L & R
+                html += `<div style="display:flex; gap: 80px; margin-top: 15px;">`;
+                
+                html += `<div style="display:flex; flex-direction:column; align-items:flex-start;">`;
+                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
+                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">L</span>`;
+                html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr>`;
+                L.forEach(val => html += `<td>${genSelect(val)}</td>`);
+                html += `</tr></tbody></table></div>`;
+                html += `<div class="q4-pointer" style="margin-top:5px; margin-left:-25px;">i= ${genSelect(currentI)}</div>`;
+                html += `</div>`;
+
+                html += `<div style="display:flex; flex-direction:column; align-items:flex-start;">`;
+                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
+                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">R</span>`;
+                html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr>`;
+                R.forEach(val => html += `<td>${genSelect(val)}</td>`);
+                html += `</tr></tbody></table></div>`;
+                html += `<div class="q4-pointer" style="margin-top:5px; margin-left:-25px;">j= ${genSelect(currentJ)}</div>`;
+                html += `</div>`;
+
+                html += `</div></div>`;
             }
             document.getElementById('q4-content').innerHTML = html;
         }
         initQ4();
 
+        // Q5 MERGE TREE - REBUILT TO MATCH EXACT VISUAL GEOMETRY
         function initQ5() {
-            const data = [
-                [{vals: [16,22,14,38,25,56,32,19], type: 'static'}],
-                [{vals: [16,22,14,38], type: 'static'}, {vals: [25,56,32,19], type: 'input'}],
-                [{vals: [16,22], type: 'input'}, {vals: [14,38], type: 'input'}, {vals: [25,56], type: 'input'}, {vals: [32,19], type: 'input'}],
-                [{vals: [16,22], type: 'input'}, {vals: [14,38], type: 'input'}, {vals: [25,56], type: 'input'}, {vals: [32,19], type: 'input'}],
-                [{vals: [16,22], type: 'yellow'}, {vals: [14,38], type: 'yellow'}, {vals: [25,56], type: 'yellow'}, {vals: [19,32], type: 'yellow-red'}],
-                [{vals: [16,22,14,38], type: 'input'}, {vals: [25,56,19,32], type: 'input'}],
-                [{vals: [14,16,22,38], type: 'yellow-red'}, {vals: [19,25,32,56], type: 'yellow-red'}],
-                [{vals: [14,16,22,38,19,25,32,56], type: 'input'}],
-                [{vals: [14,16,19,22,25,32,38,56], type: 'yellow-red'}],
-                [{vals: [14,16,19,22,25,32,38,56], type: 'yellow'}]
-            ];
-            let html = '';
-            data.forEach(row => {
-                html += `<div class="mt-row">`;
-                row.forEach(group => {
-                    html += `<div class="mt-group">`;
-                    group.vals.forEach(val => {
-                        if (group.type === 'static') html += `<div class="mt-cell">${val}</div>`;
-                        else if (group.type === 'input') html += `<div class="mt-cell input-mode"><input type="text" data-answer="${val}"></div>`;
-                        else if (group.type === 'yellow') html += `<div class="mt-cell input-mode yellow"><input type="text" data-answer="${val}"></div>`;
-                        else if (group.type === 'yellow-red') html += `<div class="mt-cell input-mode yellow red-text"><input style="color:red;" type="text" data-answer="${val}"></div>`;
-                    });
-                    html += `</div>`;
+            let html = `<svg width="900" height="1100" style="position: absolute; top:0; left:0; z-index:1;">`;
+            
+            function line(x1, y1, x2, y2) { html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black" stroke-width="1.5" />`; }
+            
+            // Draw all split lines exactly
+            line(450, 70, 450, 100); line(250, 100, 650, 100); line(250, 100, 250, 130); line(650, 100, 650, 130); // Level 1 to 2
+            line(250, 160, 250, 190); line(150, 190, 350, 190); line(150, 190, 150, 220); line(350, 190, 350, 220); // Level 2 to 3 (L)
+            line(650, 160, 650, 190); line(550, 190, 750, 190); line(550, 190, 550, 220); line(750, 190, 750, 220); // Level 2 to 3 (R)
+            line(150, 250, 150, 280); line(110, 280, 190, 280); line(110, 280, 110, 310); line(190, 280, 190, 310); // L3 to 4
+            line(350, 250, 350, 280); line(310, 280, 390, 280); line(310, 280, 310, 310); line(390, 280, 390, 310);
+            line(550, 250, 550, 280); line(510, 280, 590, 280); line(510, 280, 510, 310); line(590, 280, 590, 310);
+            line(750, 250, 750, 280); line(710, 280, 790, 280); line(710, 280, 710, 310); line(790, 280, 790, 310);
+            
+            // Draw merge lines exactly
+            line(110, 340, 110, 370); line(190, 340, 190, 370); line(110, 370, 190, 370); line(150, 370, 150, 400); // L4 to 5
+            line(310, 340, 310, 370); line(390, 340, 390, 370); line(310, 370, 390, 370); line(350, 370, 350, 400);
+            line(510, 340, 510, 370); line(590, 340, 590, 370); line(510, 370, 590, 370); line(550, 370, 550, 400);
+            line(710, 340, 710, 370); line(790, 340, 790, 370); line(710, 370, 790, 370); line(750, 370, 750, 400);
+            line(150, 430, 150, 480); line(350, 430, 350, 480); line(550, 430, 550, 480); line(750, 430, 750, 480); // L5 to 6 Straight
+            line(150, 510, 150, 540); line(350, 510, 350, 540); line(150, 540, 350, 540); line(250, 540, 250, 570); // L6 to 7 Merge
+            line(550, 510, 550, 540); line(750, 510, 750, 540); line(550, 540, 750, 540); line(650, 540, 650, 570);
+            line(250, 600, 250, 650); line(650, 600, 650, 650); // L7 to 8 Straight
+            line(250, 680, 250, 720); line(650, 680, 650, 720); line(250, 720, 650, 720); line(450, 720, 450, 750); // L8 to 9 Merge
+            line(450, 780, 450, 830); // L9 to 10 Straight
+            line(450, 860, 450, 910); // L10 to 11 Straight
+            html += `</svg>`;
+
+            function renderGroup(x, y, vals, styleClass, isStatic=false) {
+                let w = vals.length * 40;
+                let gHtml = `<div class="q5-node" style="left:${x}px; top:${y}px; width:${w}px;">`;
+                vals.forEach(val => {
+                    if (isStatic) gHtml += `<div class="q5-cell">${val}</div>`;
+                    else gHtml += `<div class="q5-cell" style="padding:2px;"><input type="text" class="q5-input ${styleClass}" data-answer="${val}"></div>`;
                 });
-                html += `</div>`;
-                if(row !== data[data.length-1]) html += `<div style="height: 15px; width: 2px; background: #333;"></div>`;
-            });
+                gHtml += `</div>`; return gHtml;
+            }
+
+            // Level 1: Static [16, 22, 14, 38, 25, 56, 32, 19]
+            html += `<div style="position:absolute; left:230px; top:40px; font-weight:bold; font-size:12px;">Step 1: Merge_Sort 1</div>`;
+            html += renderGroup(450, 40, [16,22,14,38,25,56,32,19], '', true);
+            
+            // Level 2
+            html += `<div style="position:absolute; left:230px; top:130px; font-weight:bold; font-size:12px;">Step 2: Merge_Sort 2</div>`;
+            html += renderGroup(250, 130, [16,22,14,38], '', true);
+            html += renderGroup(650, 130, [25,56,32,19], 'blue');
+
+            // Level 3
+            html += `<div style="position:absolute; left:230px; top:220px; font-weight:bold; font-size:12px;">Step 3:<br>Merge_Sort 3</div>`;
+            html += renderGroup(150, 220, [16,22], 'blue'); html += renderGroup(350, 220, [14,38], 'blue');
+            html += renderGroup(550, 220, [25,56], 'blue'); html += renderGroup(750, 220, [32,19], 'blue');
+
+            // Level 4
+            html += renderGroup(110, 310, [16], 'blue'); html += renderGroup(190, 310, [22], 'blue');
+            html += renderGroup(310, 310, [14], 'blue'); html += renderGroup(390, 310, [38], 'blue');
+            html += renderGroup(510, 310, [25], 'blue'); html += renderGroup(590, 310, [56], 'blue');
+            html += renderGroup(710, 310, [32], 'blue'); html += renderGroup(790, 310, [19], 'blue');
+
+            // Level 5 (Merge back up, unsorted)
+            html += renderGroup(150, 400, [16,22], 'blue'); html += renderGroup(350, 400, [14,38], 'blue');
+            html += renderGroup(550, 400, [25,56], 'blue'); html += renderGroup(750, 400, [32,19], 'blue');
+
+            // Level 6 (Sorted pairs, yellow/red)
+            html += renderGroup(150, 480, [16,22], 'red-yellow'); html += renderGroup(350, 480, [14,38], 'red-yellow');
+            html += renderGroup(550, 480, [25,56], 'red-yellow'); html += renderGroup(750, 480, [19,32], 'red-yellow');
+
+            // Level 7 (Merge 4, unsorted copied)
+            html += renderGroup(250, 570, [16,22,14,38], 'blue'); html += renderGroup(650, 570, [25,56,19,32], 'blue');
+
+            // Level 8 (Sorted 4, yellow/red)
+            html += renderGroup(250, 650, [14,16,22,38], 'red-yellow'); html += renderGroup(650, 650, [19,25,32,56], 'red-yellow');
+
+            // Level 9 (Merge 8, unsorted copied)
+            html += renderGroup(450, 750, [14,16,22,38,19,25,32,56], 'blue');
+
+            // Level 10 (Sorted 8, yellow/red)
+            html += renderGroup(450, 830, [14,16,19,22,25,32,38,56], 'red-yellow');
+
+            // Level 11 (Final result, yellow/blue)
+            html += renderGroup(450, 910, [14,16,19,22,25,32,38,56], 'blue-yellow');
+            html += `<div style="position:absolute; left:180px; top:960px; font-size:12px; color:#c00000;">Please answer all parts of the question.</div>`;
+
             document.getElementById('q5-content').innerHTML = html;
         }
         initQ5();
@@ -766,8 +856,6 @@
                 { alg: 'Partition1', op: 'Povit=A[1]=23 L=2 R=7 .', arr: [23,22,40,16,13,33,26], mode: 'static' },
                 { alg: '', op: 'L <= R √', arr: ['','L','','','','','R'], mode: 'ptr' },
                 { alg: '', op: '22 <= Povit √', arr: ['','','L','','','','R'], mode: 'ptr' },
-                
-                // Uncompleted rows as actual dropdowns
                 { alg: '', op: '', arr: ['','','L','','','R',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','L','','R','',''], mode: 'input' },
                 { alg: '', op: '', arr: [23,22,13,16,40,33,26], mode: 'input' },
@@ -777,8 +865,6 @@
                 { alg: '', op: '', arr: [16,22,13,23,40,33,26], mode: 'input' },
                 { alg: '', op: '', arr: ['','L','R','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: [16,13,22,'','','',''], mode: 'input' },
-                
-                // Intentionally empty dropdowns to mirror real assignment
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
@@ -790,10 +876,7 @@
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' }
             ];
-            
-            // Unified options across all quick sort cells matching your array numbers and pointer logic
             const qsOptions = ["", "13", "16", "22", "23", "26", "33", "40", "L", "R", "L R", "R L"];
-            
             let html = `<table class="qs-table"><thead><tr><th>Algorithm</th><th>Operation</th><th colspan="7">Array</th></tr><tr><th></th><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>`;
             rows.forEach(r => {
                 let trClass = r.mode === 'ptr' ? 'qs-pointer-row' : '';
@@ -802,13 +885,9 @@
                     if (r.mode === 'static') html += `<td style="background:#e2f0d9;">${val}</td>`;
                     else if (r.mode === 'ptr') html += `<td>${val ? `<strong>${val}</strong>` : ''}</td>`;
                     else {
-                        // Create actual HTML select elements with proper options
                         let selectHtml = `<select data-answer="${val}">`;
-                        qsOptions.forEach(opt => {
-                            selectHtml += `<option value="${opt}">${opt}</option>`;
-                        });
-                        selectHtml += `</select>`;
-                        html += `<td>${selectHtml}</td>`;
+                        qsOptions.forEach(opt => { selectHtml += `<option value="${opt}">${opt}</option>`; });
+                        selectHtml += `</select>`; html += `<td>${selectHtml}</td>`;
                     }
                 });
                 html += `</tr>`;
@@ -870,7 +949,6 @@
         }
         generateBubbleTable();
 
-        // Drag and Drop Initializer
         function initDragAndDrop() {
             document.querySelectorAll('.dd-drag').forEach(item => {
                 item.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', e.target.innerText); });
