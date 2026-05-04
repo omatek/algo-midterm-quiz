@@ -448,13 +448,13 @@
                     <div id="q3-content" class="heap-wrapper"></div>
                 </div>
 
-                <!-- Q4: MERGE SUBROUTINE (REBUILT WITH EXACT DROPDOWNS) -->
+                <!-- Q4: MERGE SUBROUTINE -->
                 <div id="q4-tab" class="tab-content">
                     <div class="instruction-box" style="font-weight:bold; font-size:14px; background:white; border:none; padding-bottom:5px;">Merge(A, 1, 4, 8)</div>
                     <div id="q4-content" style="background:#eef5fa; padding: 20px; border: 1px solid #ccc; overflow-x: auto; width: fit-content; margin: 0 auto;"></div>
                 </div>
 
-                <!-- Q5: MERGE SORT TREE (REBUILT WITH EXACT VISUALS) -->
+                <!-- Q5: MERGE SORT TREE -->
                 <div id="q5-tab" class="tab-content">
                     <div style="font-weight: bold; font-size:12px; margin-bottom: 20px; display:flex; justify-content:space-between; width: 600px;">
                         <span>Apply Merge_Sort algorithm on<br>array A.</span>
@@ -463,36 +463,39 @@
                     <div id="q5-content" class="q5-container"></div>
                 </div>
 
+                <!-- Q6: QUICK SORT -->
                 <div id="q6-tab" class="tab-content">
                     <div class="instruction-box">
                         <strong style="color:red;">Pivot will be the first element of the Partition</strong><br>
                         <strong>Note: QS means Quick_Sort, P means Partition</strong>
                     </div>
-                    <!-- Quick Sort Table with Select Dropdowns -->
                     <div id="q6-content" style="overflow-x: auto;"></div>
                 </div>
 
+                <!-- Q7: INSERTION SORT -->
                 <div id="q7-tab" class="tab-content">
-                    <div class="instruction-box">Insert the elements <strong>32, 27, 23, 15, 19, 17, 15, 12</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong>.</div>
+                    <div class="instruction-box">Insert the elements <strong>8, 7, 3, 5, 6, 1, 4, 2</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong>.</div>
                     <table id="insertion-table">
                         <thead><tr><th class="header-insert">Inset</th><th colspan="8">Array</th></tr></thead>
                         <tbody id="insertion-body"></tbody>
                     </table>
                 </div>
 
+                <!-- Q8: BUBBLE SORT -->
                 <div id="q8-tab" class="tab-content">
-                    <div class="instruction-box">Apply <strong style="color: red;">Bubble_Sort</strong> algorithm on array A: <strong>[17, 11, 15, 34, 65, 41, 26, 9]</strong></div>
+                    <div class="instruction-box">Apply <strong style="color: red;">Bubble_Sort</strong> algorithm on array A: <strong>[8, 4, 10, 2, 5, 11, 6, 9]</strong></div>
                     <table id="bubble-table">
                         <thead><tr><th>Pass</th><th>Operation</th><th colspan="8">Array</th></tr></thead>
                         <tbody id="bubble-body"></tbody>
                     </table>
                 </div>
 
+                <!-- Q9: COMPLEXITIES -->
                 <div id="q9-tab" class="tab-content">
                     <div class="instruction-box"><strong>Drag and drop the correct items into the blanks. (Click a blank to clear it).</strong></div>
                     <div style="line-height: 3; font-size: 15px; background: white; padding: 20px; border: 1px solid #ccc;">
                         1- Insertion Sort time complexity is <input type="text" class="dd-drop" data-answer="O(N^2)" readonly placeholder="Drop here"> in the worst case.<br>
-                        2- Bubble Sort time complexity is <input type="text" class="dd-drop" data-answer="O(N)" readonly placeholder="Drop here"> in the best case.<br>
+                        2- Bubble Sort time complexity is <input type="text" class="dd-drop" data-answer="O(N^2)" readonly placeholder="Drop here"> in the best case.<br>
                         3- Merge Sort time complexity is <input type="text" class="dd-drop" data-answer="O(NLogN)" readonly placeholder="Drop here"> in the average case.<br>
                         4- Quick Sort time complexity is <input type="text" class="dd-drop" data-answer="O(NLogN)" readonly placeholder="Drop here"> in the best case.<br>
                         5- When an algorithm sorts in place, the space complexity is <input type="text" class="dd-drop" data-answer="O(1)" readonly placeholder="Drop here"> .<br>
@@ -696,14 +699,15 @@
 
         // Q4 MERGE SUBROUTINE - REBUILT TO MATCH EXACT VISUAL AND DROPDOWNS
         function initQ4() {
-            const dropdownOptions = ["", "11", "13", "16", "18", "20", "21", "23", "∞", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            const dropdownOptions = ["", "13", "16", "18", "20", "21", "23", "31", "∞", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
             function genSelect(ans) {
                 let s = `<select data-answer="${ans}">`;
                 dropdownOptions.forEach(opt => s += `<option value="${opt}">${opt}</option>`);
                 s += `</select>`; return s;
             }
 
-            let L = ["11", "16", "18", "23", "∞"], R = ["13", "16", "20", "21", "∞"], A = ["11", "16", "18", "23", "13", "16", "20", "21"];
+            let L = ["31", "16", "18", "23", "∞"], R = ["13", "16", "20", "21", "∞"];
+            let A = ["31", "16", "18", "23", "13", "16", "20", "21"]; // Initial unsorted layout required by the image
             let currentI = 1, currentJ = 1;
             let html = '';
 
@@ -725,9 +729,9 @@
                 html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">A</span>`;
                 html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead><tbody><tr>`;
                 if (step === 0) {
-                    A.forEach(val => html += `<td>${val}</td>`); // Static blue text initially
+                    A.forEach(val => html += `<td>${val}</td>`); 
                 } else {
-                    A.forEach(val => html += `<td>${genSelect(val)}</td>`); // Dropdowns for steps
+                    A.forEach(val => html += `<td>${genSelect(val)}</td>`);
                 }
                 html += `</tr></tbody></table></div>`;
                 
@@ -764,30 +768,29 @@
         // Q5 MERGE TREE - REBUILT TO MATCH EXACT VISUAL GEOMETRY
         function initQ5() {
             let html = `<svg width="900" height="1100" style="position: absolute; top:0; left:0; z-index:1;">`;
-            
             function line(x1, y1, x2, y2) { html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black" stroke-width="1.5" />`; }
             
             // Draw all split lines exactly
-            line(450, 70, 450, 100); line(250, 100, 650, 100); line(250, 100, 250, 130); line(650, 100, 650, 130); // Level 1 to 2
-            line(250, 160, 250, 190); line(150, 190, 350, 190); line(150, 190, 150, 220); line(350, 190, 350, 220); // Level 2 to 3 (L)
-            line(650, 160, 650, 190); line(550, 190, 750, 190); line(550, 190, 550, 220); line(750, 190, 750, 220); // Level 2 to 3 (R)
-            line(150, 250, 150, 280); line(110, 280, 190, 280); line(110, 280, 110, 310); line(190, 280, 190, 310); // L3 to 4
+            line(450, 70, 450, 100); line(250, 100, 650, 100); line(250, 100, 250, 130); line(650, 100, 650, 130); 
+            line(250, 160, 250, 190); line(150, 190, 350, 190); line(150, 190, 150, 220); line(350, 190, 350, 220); 
+            line(650, 160, 650, 190); line(550, 190, 750, 190); line(550, 190, 550, 220); line(750, 190, 750, 220); 
+            line(150, 250, 150, 280); line(110, 280, 190, 280); line(110, 280, 110, 310); line(190, 280, 190, 310); 
             line(350, 250, 350, 280); line(310, 280, 390, 280); line(310, 280, 310, 310); line(390, 280, 390, 310);
             line(550, 250, 550, 280); line(510, 280, 590, 280); line(510, 280, 510, 310); line(590, 280, 590, 310);
             line(750, 250, 750, 280); line(710, 280, 790, 280); line(710, 280, 710, 310); line(790, 280, 790, 310);
             
             // Draw merge lines exactly
-            line(110, 340, 110, 370); line(190, 340, 190, 370); line(110, 370, 190, 370); line(150, 370, 150, 400); // L4 to 5
+            line(110, 340, 110, 370); line(190, 340, 190, 370); line(110, 370, 190, 370); line(150, 370, 150, 400); 
             line(310, 340, 310, 370); line(390, 340, 390, 370); line(310, 370, 390, 370); line(350, 370, 350, 400);
             line(510, 340, 510, 370); line(590, 340, 590, 370); line(510, 370, 590, 370); line(550, 370, 550, 400);
             line(710, 340, 710, 370); line(790, 340, 790, 370); line(710, 370, 790, 370); line(750, 370, 750, 400);
-            line(150, 430, 150, 480); line(350, 430, 350, 480); line(550, 430, 550, 480); line(750, 430, 750, 480); // L5 to 6 Straight
-            line(150, 510, 150, 540); line(350, 510, 350, 540); line(150, 540, 350, 540); line(250, 540, 250, 570); // L6 to 7 Merge
+            line(150, 430, 150, 480); line(350, 430, 350, 480); line(550, 430, 550, 480); line(750, 430, 750, 480); 
+            line(150, 510, 150, 540); line(350, 510, 350, 540); line(150, 540, 350, 540); line(250, 540, 250, 570); 
             line(550, 510, 550, 540); line(750, 510, 750, 540); line(550, 540, 750, 540); line(650, 540, 650, 570);
-            line(250, 600, 250, 650); line(650, 600, 650, 650); // L7 to 8 Straight
-            line(250, 680, 250, 720); line(650, 680, 650, 720); line(250, 720, 650, 720); line(450, 720, 450, 750); // L8 to 9 Merge
-            line(450, 780, 450, 830); // L9 to 10 Straight
-            line(450, 860, 450, 910); // L10 to 11 Straight
+            line(250, 600, 250, 650); line(650, 600, 650, 650); 
+            line(250, 680, 250, 720); line(650, 680, 650, 720); line(250, 720, 650, 720); line(450, 720, 450, 750); 
+            line(450, 780, 450, 830); 
+            line(450, 860, 450, 910); 
             html += `</svg>`;
 
             function renderGroup(x, y, vals, styleClass, isStatic=false) {
@@ -800,47 +803,33 @@
                 gHtml += `</div>`; return gHtml;
             }
 
-            // Level 1: Static [16, 22, 14, 38, 25, 56, 32, 19]
+            // Levels strictly aligned to matches lines
             html += `<div style="position:absolute; left:230px; top:40px; font-weight:bold; font-size:12px;">Step 1: Merge_Sort 1</div>`;
             html += renderGroup(450, 40, [16,22,14,38,25,56,32,19], '', true);
             
-            // Level 2
             html += `<div style="position:absolute; left:230px; top:130px; font-weight:bold; font-size:12px;">Step 2: Merge_Sort 2</div>`;
             html += renderGroup(250, 130, [16,22,14,38], '', true);
-            html += renderGroup(650, 130, [25,56,32,19], 'blue');
+            html += renderGroup(550, 130, [25,56], 'blue'); html += renderGroup(750, 130, [32,19], 'blue');
 
-            // Level 3
             html += `<div style="position:absolute; left:230px; top:220px; font-weight:bold; font-size:12px;">Step 3:<br>Merge_Sort 3</div>`;
             html += renderGroup(150, 220, [16,22], 'blue'); html += renderGroup(350, 220, [14,38], 'blue');
             html += renderGroup(550, 220, [25,56], 'blue'); html += renderGroup(750, 220, [32,19], 'blue');
 
-            // Level 4
             html += renderGroup(110, 310, [16], 'blue'); html += renderGroup(190, 310, [22], 'blue');
             html += renderGroup(310, 310, [14], 'blue'); html += renderGroup(390, 310, [38], 'blue');
             html += renderGroup(510, 310, [25], 'blue'); html += renderGroup(590, 310, [56], 'blue');
             html += renderGroup(710, 310, [32], 'blue'); html += renderGroup(790, 310, [19], 'blue');
 
-            // Level 5 (Merge back up, unsorted)
             html += renderGroup(150, 400, [16,22], 'blue'); html += renderGroup(350, 400, [14,38], 'blue');
             html += renderGroup(550, 400, [25,56], 'blue'); html += renderGroup(750, 400, [32,19], 'blue');
 
-            // Level 6 (Sorted pairs, yellow/red)
             html += renderGroup(150, 480, [16,22], 'red-yellow'); html += renderGroup(350, 480, [14,38], 'red-yellow');
             html += renderGroup(550, 480, [25,56], 'red-yellow'); html += renderGroup(750, 480, [19,32], 'red-yellow');
 
-            // Level 7 (Merge 4, unsorted copied)
             html += renderGroup(250, 570, [16,22,14,38], 'blue'); html += renderGroup(650, 570, [25,56,19,32], 'blue');
-
-            // Level 8 (Sorted 4, yellow/red)
             html += renderGroup(250, 650, [14,16,22,38], 'red-yellow'); html += renderGroup(650, 650, [19,25,32,56], 'red-yellow');
-
-            // Level 9 (Merge 8, unsorted copied)
             html += renderGroup(450, 750, [14,16,22,38,19,25,32,56], 'blue');
-
-            // Level 10 (Sorted 8, yellow/red)
             html += renderGroup(450, 830, [14,16,19,22,25,32,38,56], 'red-yellow');
-
-            // Level 11 (Final result, yellow/blue)
             html += renderGroup(450, 910, [14,16,19,22,25,32,38,56], 'blue-yellow');
             html += `<div style="position:absolute; left:180px; top:960px; font-size:12px; color:#c00000;">Please answer all parts of the question.</div>`;
 
@@ -848,7 +837,7 @@
         }
         initQ5();
 
-        // QUICK SORT - ACTUAL SELECT DROPDOWNS
+        // QUICK SORT - ACTUAL ALGORITHM TRACE
         function initQ6() {
             const rows = [
                 { alg: 'Quick_Sort1', op: 'Left >= Right X', arr: [23,22,40,16,13,33,26], mode: 'static' },
@@ -859,22 +848,22 @@
                 { alg: '', op: '', arr: ['','','L','','','R',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','L','','R','',''], mode: 'input' },
                 { alg: '', op: '', arr: [23,22,13,16,40,33,26], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','L','','R',''], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','L','R','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','L R','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','R','L','',''], mode: 'input' },
                 { alg: '', op: '', arr: [16,22,13,23,40,33,26], mode: 'input' },
                 { alg: '', op: '', arr: ['','L','R','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: [16,13,22,'','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' }
+                { alg: '', op: '', arr: [16,13,22,23,40,33,26], mode: 'input' },
+                { alg: '', op: '', arr: ['','L R','','','','',''], mode: 'input' },
+                { alg: '', op: '', arr: ['R','L','','','','',''], mode: 'input' },
+                { alg: '', op: '', arr: [13,16,22,23,40,33,26], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','','','L','R'], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','','','','L R'], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','','','','R'], mode: 'input' },
+                { alg: '', op: '', arr: [13,16,22,23,26,33,40], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','','','L R',''], mode: 'input' },
+                { alg: '', op: '', arr: ['','','','','R','L',''], mode: 'input' },
+                { alg: '', op: 'Result Sorted Array', arr: [13,16,22,23,26,33,40], mode: 'input' }
             ];
             const qsOptions = ["", "13", "16", "22", "23", "26", "33", "40", "L", "R", "L R", "R L"];
             let html = `<table class="qs-table"><thead><tr><th>Algorithm</th><th>Operation</th><th colspan="7">Array</th></tr><tr><th></th><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>`;
@@ -897,8 +886,9 @@
         }
         initQ6();
 
+        // Q7 INSERTION SORT
         function generateInsertionTable() {
-            const elements = [32, 27, 23, 15, 19, 17, 15, 12];
+            const elements = [8, 7, 3, 5, 6, 1, 4, 2];
             const tbody = document.getElementById('insertion-body');
             let arr = [];
             for (let i = 0; i < elements.length; i++) {
@@ -927,8 +917,9 @@
         }
         generateInsertionTable();
 
+        // Q8 BUBBLE SORT
         function generateBubbleTable() {
-            const initialArr = [17, 11, 15, 34, 65, 41, 26, 9];
+            const initialArr = [8, 4, 10, 2, 5, 11, 6, 9];
             let arr = [...initialArr];
             const tbody = document.getElementById('bubble-body');
             tbody.innerHTML += `<tr><td class="bubble-title-cell" colspan="2">Bubble_Sort(<br>A[], 1, 8 )</td>` + initialArr.map(v => `<td style="font-weight:bold; background:#e2f0d9;">${v}</td>`).join('') + `</tr>`;
@@ -949,6 +940,7 @@
         }
         generateBubbleTable();
 
+        // Drag and Drop Initializer
         function initDragAndDrop() {
             document.querySelectorAll('.dd-drag').forEach(item => {
                 item.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', e.target.innerText); });
