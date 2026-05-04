@@ -108,8 +108,8 @@
         .tab-content.active { display: block; }
 
         /* Inputs and Validation */
-        input[type="text"] { width: 35px; height: 25px; text-align: center; border: 1px solid #a0a0a0; border-radius: 4px; font-size: 14px; background-color: white; }
-        input[type="text"]:focus { outline: 2px solid #0066cc; border-color: #0066cc; }
+        input[type="text"], select { width: 35px; height: 25px; text-align: center; border: 1px solid #a0a0a0; border-radius: 4px; font-size: 14px; background-color: white; }
+        input[type="text"]:focus, select:focus { outline: 2px solid #0066cc; border-color: #0066cc; }
         .input-auto { width: auto !important; min-width: 60px; padding: 0 5px; }
         .input-wide { width: 180px !important; }
         .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
@@ -174,9 +174,8 @@
         .mt-cell.red-text { color: red; }
         
         .qs-table { border: 2px solid #555; background: #dce6f1; }
+        .qs-table select { width: 50px; text-align: center; }
         .qs-pointer-row td { border: none; padding: 2px; height: 25px; }
-        /* Quick sort dropdown styling simulation */
-        .qs-select-sim { appearance: menulist; padding-right: 15px; background: white url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><polygon points="70,100 10,40 130,40" fill="%23333"/></svg>') no-repeat right 3px center; background-size: 8px; }
     </style>
 </head>
 <body>
@@ -452,7 +451,7 @@
                         <strong style="color:red;">Pivot will be the first element of the Partition</strong><br>
                         <strong>Note: QS means Quick_Sort, P means Partition</strong>
                     </div>
-                    <!-- Quick Sort table rebuilt to match 'quick.png' exactly -->
+                    <!-- Quick Sort Table with Select Dropdowns -->
                     <div id="q6-content" style="overflow-x: auto;"></div>
                 </div>
 
@@ -544,7 +543,8 @@
         // ==========================================
         function getActiveInputs() {
             const activeTab = document.querySelector('.quiz-container.active .tab-content.active');
-            return activeTab.querySelectorAll('input[type="text"]:not([readonly="readonly"]), input.dd-drop');
+            // Added select dropdowns to validation query
+            return activeTab.querySelectorAll('input[type="text"]:not([readonly="readonly"]), input.dd-drop, select');
         }
 
         function checkAnswers() {
@@ -758,7 +758,7 @@
         }
         initQ5();
 
-        // QUICK SORT - EXACT REPLICA OF THE IMAGE
+        // QUICK SORT - ACTUAL SELECT DROPDOWNS
         function initQ6() {
             const rows = [
                 { alg: 'Quick_Sort1', op: 'Left >= Right X', arr: [23,22,40,16,13,33,26], mode: 'static' },
@@ -767,7 +767,7 @@
                 { alg: '', op: 'L <= R √', arr: ['','L','','','','','R'], mode: 'ptr' },
                 { alg: '', op: '22 <= Povit √', arr: ['','','L','','','','R'], mode: 'ptr' },
                 
-                // Rows exactly as seen in the incomplete screenshot quick.png
+                // Uncompleted rows as actual dropdowns
                 { alg: '', op: '', arr: ['','','L','','','R',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','L','','R','',''], mode: 'input' },
                 { alg: '', op: '', arr: [23,22,13,16,40,33,26], mode: 'input' },
@@ -778,7 +778,7 @@
                 { alg: '', op: '', arr: ['','L','R','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: [16,13,22,'','','',''], mode: 'input' },
                 
-                // Rows 15 to 24 are fully blank dropdown fields in the image
+                // Intentionally empty dropdowns to mirror real assignment
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' },
@@ -791,6 +791,9 @@
                 { alg: '', op: '', arr: ['','','','','','',''], mode: 'input' }
             ];
             
+            // Unified options across all quick sort cells matching your array numbers and pointer logic
+            const qsOptions = ["", "13", "16", "22", "23", "26", "33", "40", "L", "R", "L R", "R L"];
+            
             let html = `<table class="qs-table"><thead><tr><th>Algorithm</th><th>Operation</th><th colspan="7">Array</th></tr><tr><th></th><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>`;
             rows.forEach(r => {
                 let trClass = r.mode === 'ptr' ? 'qs-pointer-row' : '';
@@ -799,8 +802,13 @@
                     if (r.mode === 'static') html += `<td style="background:#e2f0d9;">${val}</td>`;
                     else if (r.mode === 'ptr') html += `<td>${val ? `<strong>${val}</strong>` : ''}</td>`;
                     else {
-                        // Empty string data-answer handles the blank fields properly now
-                        html += `<td><input type="text" class="qs-select-sim" data-answer="${val}"></td>`;
+                        // Create actual HTML select elements with proper options
+                        let selectHtml = `<select data-answer="${val}">`;
+                        qsOptions.forEach(opt => {
+                            selectHtml += `<option value="${opt}">${opt}</option>`;
+                        });
+                        selectHtml += `</select>`;
+                        html += `<td>${selectHtml}</td>`;
                     }
                 });
                 html += `</tr>`;
