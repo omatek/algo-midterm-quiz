@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algorithm Quizzes Master Portal</title>
     
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VBFKHC4SR5"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,9 +13,7 @@
       gtag('config', 'G-VBFKHC4SR5');
     </script>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,8 +25,6 @@
             color: #333;
             min-height: 100vh;
         }
-
-        /* Portal Header */
         .portal-header {
             background-color: #003366;
             padding: 15px 20px;
@@ -54,15 +49,11 @@
             color: #000;
             box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
         }
-
-        /* Main layout wrapper */
         .app-body {
             display: flex;
             padding: 20px;
             flex-grow: 1;
         }
-
-        /* Sidebar styling */
         .sidebar {
             background-color: #f8f9fa;
             border: 1px solid #ccc;
@@ -76,8 +67,6 @@
         .sidebar h2 span { font-size: 24px; font-weight: bold; color: #333; display: block; }
         .sidebar p { font-size: 12px; color: #666; margin: 10px 0; }
         .flag { color: #0066cc; cursor: pointer; text-decoration: none; font-size: 12px;}
-
-        /* Main content styling */
         .main-content {
             flex-grow: 1;
             display: flex;
@@ -88,7 +77,6 @@
         }
         .quiz-container { display: none; }
         .quiz-container.active { display: block; }
-
         .instruction-box {
             background-color: #f1f5f9;
             border: 1px solid #ccc;
@@ -99,15 +87,11 @@
             width: 100%;
             box-sizing: border-box;
         }
-
-        /* Tabs */
         .tab-nav { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .tab-btn { padding: 10px 15px; cursor: pointer; background: #e0e0e0; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; }
         .tab-btn.active { background: #0066cc; color: white; border-color: #0052a3; }
         .tab-content { display: none; background: transparent; padding-bottom: 80px; }
         .tab-content.active { display: block; }
-
-        /* Inputs and Validation */
         input[type="text"], select { width: 35px; height: 25px; text-align: center; border: 1px solid #a0a0a0; border-radius: 4px; font-size: 14px; background-color: white; }
         input[type="text"]:focus, select:focus { outline: 2px solid #0066cc; border-color: #0066cc; }
         .input-auto { width: auto !important; min-width: 60px; padding: 0 5px; }
@@ -115,37 +99,28 @@
         .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
         .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; }
         .feedback { margin-left: 15px; font-weight: bold; align-self: center; }
-
-        /* Tables */
         table { border-collapse: collapse; background-color: white; border: 2px solid black; }
         th, td { border: 1px solid black; text-align: center; padding: 4px; }
         th { font-weight: bold; background-color: #d9d9d9; }
-
-        /* Controls */
         .controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); padding: 15px; border-top: 2px solid #ccc; display: flex; justify-content: center; gap: 15px; z-index: 100; box-shadow: 0 -4px 6px rgba(0,0,0,0.1); }
         button { padding: 10px 20px; font-size: 15px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; font-weight: bold;}
         button:hover { background: #0052a3; }
         .clear-btn { background-color: #dc3545; }
         .clear-btn:hover { background-color: #c82333; }
-
-        /* Drag and Drop Elements */
         .dd-drop { min-width: 80px !important; width: auto; max-width: 250px; cursor: pointer; color: black; padding: 2px 8px; text-align: center; }
         .dd-drop::placeholder { color: #aaa; font-style: italic; }
         .dd-drop.drag-over { border-color: #ffc000; background-color: #fffde7; }
         .drag-pool { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; justify-content: center; }
         .dd-drag { padding: 8px 15px; background: white; border: 1px solid #777; border-radius: 4px; cursor: grab; font-weight: bold; user-select: none; box-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
         .dd-drag:active { cursor: grabbing; background: #eef; }
-
-        /* ------------------ QUIZ 1 SPECIFICS ------------------ */
+        /* QUIZ 1 */
         .code-block { background: #e2f0d9; padding: 15px; font-family: monospace; font-size: 15px; border: 1px solid #ccc; margin-bottom: 15px; border-radius: 4px; }
         .step-row { display: flex; align-items: center; margin: 10px 0; font-family: monospace; font-size: 15px;}
         .step-row input { margin-left: auto; margin-right: 20px; }
-        
         .rect-tree { position: relative; width: 600px; height: 200px; margin: 20px auto; }
         .rect-node { position: absolute; border: 1px solid #555; background: white; padding: 5px; transform: translateX(-50%); }
         .rect-node input { width: 75px !important; height: 20px !important; border:none; outline:none; text-align:center; font-size: 13px; }
-
-        /* ------------------ QUIZ 2 SPECIFICS ------------------ */
+        /* QUIZ 2 General */
         .header-insert { background-color: #ffc000; width: 60px; }
         .insert-col { font-weight: bold; font-size: 16px; }
         .done-row-insertion td.insert-col { background-color: yellow; color: red; font-weight: bold; }
@@ -155,15 +130,13 @@
         .bubble-op-col { background-color: #dce6f1; width: 140px; }
         .bubble-title-cell { background-color: yellow; font-weight: bold; text-align: center; }
         .pass-end { border-bottom: 3px solid black; }
-
         .heap-container { position: relative; width: 800px; height: 240px; margin: 10px 0; }
         .heap-node-input { position: absolute; width: 40px !important; height: 30px !important; margin: 0; transform: translate(-50%, -50%); z-index: 2; }
         .heap-node-static { position: absolute; width: 40px; height: 30px; margin: 0; transform: translate(-50%, -50%); z-index: 2; background: #e2f0d9; border: 1px solid #777; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .heap-array-table { margin-top: 10px; border: none; background: transparent; border-collapse: separate; border-spacing: 2px; }
         .heap-array-table td, .heap-array-table th { border: 1px solid #555; background: white; width: 40px; height: 30px; }
         .heap-array-table .index-row td { border: none; background: transparent; color: #0066cc; font-size: 12px; height: 15px; font-weight: bold; }
-        
-        /* Q4 Specifics */
+        /* Q4: Merge Subroutine — from original version */
         .merge-sub-step { padding: 15px 0; display: flex; flex-direction: column; align-items: center; position: relative; }
         .merge-arr-table { border-collapse: separate; border-spacing: 0; background: transparent; border: none; margin-bottom: 5px; }
         .merge-arr-table td { border: 2px solid #c00000; width: 50px; height: 35px; background: white; font-weight: bold; text-align: center; color: #0066cc;}
@@ -173,8 +146,7 @@
         .q4-pointer { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #555; }
         .q4-pointer select { width: 35px; height: 22px; font-size: 12px; border: 1px solid #999; }
         .dashed-divider { width: 100%; border-top: 2px dashed #000; margin: 10px 0; }
-
-        /* Q5 Specifics */
+        /* Q5: Merge Tree — from original version (absolute positioned SVG) */
         .q5-container { position: relative; width: 900px; height: 1100px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #dcedf0; }
         .q5-node { position: absolute; display: flex; border: 2px solid #c00000; background: white; transform: translateX(-50%); }
         .q5-cell { width: 40px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-right: 1px solid #ccc; color: #0066cc; }
@@ -183,21 +155,17 @@
         .q5-input.blue { color: #0066cc; background: white; }
         .q5-input.red-yellow { color: red; background: #ffff99; }
         .q5-input.blue-yellow { color: #0066cc; background: #ffff99; }
-        
-        /* Q6 Specifics */
+        /* Q6 */
         .qs-table { border: 2px solid #555; background: #dce6f1; }
         .qs-table select { width: 50px; text-align: center; }
         .qs-pointer-row td { border: none; padding: 2px; height: 25px; }
     </style>
 </head>
 <body>
-
-    <!-- PORTAL NAV -->
     <div class="portal-header">
         <button class="portal-btn active" onclick="loadQuiz('quiz1', this)">Quiz 1 (Analysis & Recurrences)</button>
         <button class="portal-btn" onclick="loadQuiz('quiz2', this)">Quiz 2 (Sorting & Heaps)</button>
     </div>
-
     <div class="app-body">
         <div class="sidebar">
             <h2>Question <span id="sidebar-q-num">1</span></h2>
@@ -205,12 +173,8 @@
             <p>Marked out of 100.00</p>
             <a href="#" class="flag">⚑ Flag question</a>
         </div>
-
         <div class="main-content">
-            
-            <!-- ============================================== -->
-            <!--                  QUIZ 1                        -->
-            <!-- ============================================== -->
+            <!-- QUIZ 1 -->
             <div id="quiz1" class="quiz-container active">
                 <div class="tab-nav">
                     <button class="tab-btn active" onclick="switchTab('q1-1-tab', this, '1')">1. Recurrence Relation</button>
@@ -220,15 +184,13 @@
                     <button class="tab-btn" onclick="switchTab('q1-5-tab', this, '5')">5. Asymptotic Match</button>
                     <button class="tab-btn" onclick="switchTab('q1-6-tab', this, '6')">6. Total Cost Code</button>
                 </div>
-
-                <!-- Q1.1 -->
                 <div id="q1-1-tab" class="tab-content active">
                     <div class="instruction-box">Consider the following recursive function then answer the questions below:</div>
                     <div class="code-block">
                         float fun ( int n)<br>
                         { if( n == 1) return 1;<br>
                         &nbsp;&nbsp;else<br>
-                        &nbsp;&nbsp;{ for( int i = 1; i<= n; i++)<br>
+                        &nbsp;&nbsp;{ for( int i = 1; i&lt;= n; i++)<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;{ j = i / 2; }<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;return fun( n/2 ) + 2 *fun( n/2 ) + 3* fun( n/2 ) -fun(n/2 ) ;<br>
                         &nbsp;&nbsp;}<br>
@@ -242,7 +204,6 @@
                         b) The solution of the recurrence relation T(n) in a) is<br>
                         <input type="text" class="dd-drop input-wide" data-answer="T(n) = O(n^2)" readonly placeholder="Drop solution here">
                     </div>
-                    
                     <div class="drag-pool">
                         <div class="dd-drag" draggable="true">T(n) = O(n * log n)</div>
                         <div class="dd-drag" draggable="true">T(n) = 4 * T(n/2) + n^2</div>
@@ -254,40 +215,23 @@
                         <div class="dd-drag" draggable="true">T(n) = 2 * T(n/4) + n^2</div>
                     </div>
                 </div>
-
-                <!-- Q1.2 -->
                 <div id="q1-2-tab" class="tab-content">
                     <div class="instruction-box">
                         Analyze the running time of the following algorithm using step count as a function of n (# of input elements).<br>
-                        Algorithm: Print positive numbers in a 2 dimensional array of size n. 
+                        Algorithm: Print positive numbers in a 2 dimensional array of size n.
                     </div>
                     <div style="font-weight:bold; margin-left: 350px;"># steps</div>
-                    <div class="step-row">
-                        <span style="margin-left: 20px;">for i=n; i>1; i--</span>
-                        <input type="text" class="dd-drop input-auto" data-answer="n" readonly placeholder="Drop here">
-                    </div>
-                    <div class="step-row">
-                        <span style="margin-left: 60px;">for j=n; j>1; j--</span>
-                        <input type="text" class="dd-drop input-auto" data-answer="n(n-1)" readonly placeholder="Drop here">
-                    </div>
-                    <div class="step-row">
-                        <span style="margin-left: 100px;">if a[i][j] > 0</span>
-                        <input type="text" class="dd-drop input-auto" data-answer="(n-1)^2" readonly placeholder="Drop here">
-                    </div>
-                    <div class="step-row">
-                        <span style="margin-left: 140px;">then print a[i][j]</span>
-                        <input type="text" class="dd-drop input-auto" data-answer="(n-1)^2" readonly placeholder="Drop here">
-                    </div>
+                    <div class="step-row"><span style="margin-left: 20px;">for i=n; i&gt;1; i--</span><input type="text" class="dd-drop input-auto" data-answer="n" readonly placeholder="Drop here"></div>
+                    <div class="step-row"><span style="margin-left: 60px;">for j=n; j&gt;1; j--</span><input type="text" class="dd-drop input-auto" data-answer="n(n-1)" readonly placeholder="Drop here"></div>
+                    <div class="step-row"><span style="margin-left: 100px;">if a[i][j] &gt; 0</span><input type="text" class="dd-drop input-auto" data-answer="(n-1)^2" readonly placeholder="Drop here"></div>
+                    <div class="step-row"><span style="margin-left: 140px;">then print a[i][j]</span><input type="text" class="dd-drop input-auto" data-answer="(n-1)^2" readonly placeholder="Drop here"></div>
                     <hr style="border: 1px solid #ccc; margin: 20px 0;">
-                    <div class="step-row">
-                        <span style="margin-left: 200px; font-weight:bold; font-size:18px;">Total</span>
-                    </div>
+                    <div class="step-row"><span style="margin-left: 200px; font-weight:bold; font-size:18px;">Total</span></div>
                     <div class="step-row">
                         <span style="font-weight:bold; font-size:16px;">Running Time</span>
                         <input type="text" class="dd-drop input-auto" style="margin-left:20px; margin-right:auto;" data-answer="O(n^2)" readonly placeholder="Drop here">
                         <input type="text" class="dd-drop input-auto" data-answer="2n^2-3n+2" readonly placeholder="Drop here">
                     </div>
-                    
                     <div class="drag-pool">
                         <div class="dd-drag" draggable="true">(n-1)/2</div>
                         <div class="dd-drag" draggable="true">3n</div>
@@ -304,17 +248,13 @@
                         <div class="dd-drag" draggable="true">O(n^2)</div>
                     </div>
                 </div>
-
-                <!-- Q1.3 -->
                 <div id="q1-3-tab" class="tab-content">
                     <div class="instruction-box">
                         Given that T(1) = 1, and T(n) = 2T(2n/4) + n^2 using recursion tree method answer the following:<br>
                         <small>Note that n^2 = n^2</small>
                     </div>
                     <div style="font-weight:bold; margin-bottom: 10px;">1) Draw the first three levels of the tree.</div>
-                    
                     <div class="rect-tree">
-                        <!-- Lines -->
                         <svg width="600" height="200" style="position: absolute; top:0; left:0;">
                             <line x1="300" y1="20" x2="150" y2="80" stroke="black" />
                             <line x1="300" y1="20" x2="450" y2="80" stroke="black" />
@@ -323,18 +263,14 @@
                             <line x1="450" y1="80" x2="375" y2="150" stroke="black" />
                             <line x1="450" y1="80" x2="525" y2="150" stroke="black" />
                         </svg>
-
-                        <!-- Nodes -->
                         <div class="rect-node" style="left:300px; top:0px;"><input type="text" data-answer="n^2" readonly value="n^2"></div>
                         <div class="rect-node" style="left:150px; top:80px;"><input type="text" class="dd-drop" data-answer="(n/2)^2" readonly placeholder="v"></div>
                         <div class="rect-node" style="left:450px; top:80px;"><input type="text" class="dd-drop" data-answer="(n/2)^2" readonly placeholder="v"></div>
-                        
                         <div class="rect-node" style="left:75px; top:150px;"><input type="text" class="dd-drop" data-answer="(n/4)^2" readonly placeholder="v"></div>
                         <div class="rect-node" style="left:225px; top:150px;"><input type="text" class="dd-drop" data-answer="(n/4)^2" readonly placeholder="v"></div>
                         <div class="rect-node" style="left:375px; top:150px;"><input type="text" class="dd-drop" data-answer="(n/4)^2" readonly placeholder="v"></div>
                         <div class="rect-node" style="left:525px; top:150px;"><input type="text" class="dd-drop" data-answer="(n/4)^2" readonly placeholder="v"></div>
                     </div>
-
                     <div style="line-height: 2.5; font-weight: bold;">
                         2) The cost of the level 0 = <input type="text" class="dd-drop input-auto" data-answer="n^2" readonly placeholder="v"><br>
                         3) The cost of the level 1 = <input type="text" class="dd-drop input-auto" data-answer="n^2/2" readonly placeholder="v"><br>
@@ -342,7 +278,6 @@
                         5) The cost of the level k = <input type="text" class="dd-drop input-auto" data-answer="n^2/2^k" readonly placeholder="v"><br>
                         6) The tree's height in terms of n = <input type="text" class="dd-drop input-auto" data-answer="log n" readonly placeholder="v"><br>
                     </div>
-
                     <div class="drag-pool">
                         <div class="dd-drag" draggable="true">n^2</div>
                         <div class="dd-drag" draggable="true">(n/2)^2</div>
@@ -355,71 +290,43 @@
                         <div class="dd-drag" draggable="true">2n^2</div>
                     </div>
                 </div>
-
-                <!-- Q1.4 -->
                 <div id="q1-4-tab" class="tab-content">
                     <div class="instruction-box">
                         Given the following function<br>
                         F(1) = 3072, F(n) = F(n-1)/2<br>
                         Find F(5).
                     </div>
-                    <div>
-                        Answer:<br>
-                        <input type="text" class="input-auto" data-answer="192">
-                    </div>
+                    <div>Answer:<br><input type="text" class="input-auto" data-answer="192"></div>
                 </div>
-
-                <!-- Q1.5 -->
                 <div id="q1-5-tab" class="tab-content">
                     <div class="instruction-box">Match the running time with the correct asymptotic notation:</div>
                     <div style="line-height: 2.5; font-size: 16px;">
-                        1. <strong>n²logn³ + 20n + 100</strong> = 
-                        <input type="text" class="dd-drop input-auto" data-answer="O" readonly placeholder="v"> (n³) <br>
-                        
-                        2. <strong>20log log n + n^0.5</strong> = 
-                        <input type="text" class="dd-drop input-auto" data-answer="Ω" readonly placeholder="v"> (log log n) <br>
-                        
-                        3. <strong>(n²+n³logn)/(n²-1)</strong> = 
-                        <input type="text" class="dd-drop input-auto" data-answer="Θ" readonly placeholder="v"> (n log n) <br>
-                        
-                        4. <strong>3ⁿ + n⁵⁰</strong> = 
-                        <input type="text" class="dd-drop input-auto" data-answer="O" readonly placeholder="v"> (n!) <br>
-                        
-                        5. <strong>(n+5)²logn²</strong> = 
-                        <input type="text" class="dd-drop input-auto" data-answer="Ω" readonly placeholder="v"> (log n) <br>
+                        1. <strong>n²logn³ + 20n + 100</strong> = <input type="text" class="dd-drop input-auto" data-answer="O" readonly placeholder="v"> (n³)<br>
+                        2. <strong>20log log n + n^0.5</strong> = <input type="text" class="dd-drop input-auto" data-answer="Ω" readonly placeholder="v"> (log log n)<br>
+                        3. <strong>(n²+n³logn)/(n²-1)</strong> = <input type="text" class="dd-drop input-auto" data-answer="Θ" readonly placeholder="v"> (n log n)<br>
+                        4. <strong>3ⁿ + n⁵⁰</strong> = <input type="text" class="dd-drop input-auto" data-answer="O" readonly placeholder="v"> (n!)<br>
+                        5. <strong>(n+5)²logn²</strong> = <input type="text" class="dd-drop input-auto" data-answer="Ω" readonly placeholder="v"> (log n)<br>
                     </div>
-
                     <div class="drag-pool">
                         <div class="dd-drag" draggable="true">O</div>
                         <div class="dd-drag" draggable="true">Ω</div>
                         <div class="dd-drag" draggable="true">Θ</div>
                     </div>
                 </div>
-
-                <!-- Q1.6 -->
                 <div id="q1-6-tab" class="tab-content">
-                    <div class="instruction-box" style="color:red; font-weight:bold;">
-                        Calculate the total cost to execute the following code if input size n=7
-                    </div>
+                    <div class="instruction-box" style="color:red; font-weight:bold;">Calculate the total cost to execute the following code if input size n=7</div>
                     <div class="code-block" style="line-height:2;">
-                        for i = 1; i < n; i++<br>
+                        for i = 1; i &lt; n; i++<br>
                         {<br>
                         &nbsp;&nbsp;if a[i] %2=0<br><br>
                         &nbsp;&nbsp;&nbsp;&nbsp;sum+=a[i] &nbsp;&nbsp;// Assume 1/3 of numbers in the array a[1...n] are even<br>
                         }<br>
                         sum++
                     </div>
-                    <div>
-                        Answer:<br>
-                        <input type="text" class="input-auto" data-answer="23">
-                    </div>
+                    <div>Answer:<br><input type="text" class="input-auto" data-answer="23"></div>
                 </div>
             </div>
-
-
-            <!-- ============================================== -->
-            <!--                  QUIZ 2                        -->
-            <!-- ============================================== -->
+            <!-- QUIZ 2 -->
             <div id="quiz2" class="quiz-container">
                 <div class="tab-nav">
                     <button class="tab-btn active" onclick="switchTab('q1-tab', this, '1')">Q1: Increase Key</button>
@@ -432,29 +339,24 @@
                     <button class="tab-btn" onclick="switchTab('q8-tab', this, '8')">Q8: Bubble</button>
                     <button class="tab-btn" onclick="switchTab('q9-tab', this, '9')">Q9: Complexities</button>
                 </div>
-
                 <div id="q1-tab" class="tab-content active">
                     <div class="instruction-box"><strong>Apply INCREASE-KEY(A, 8, 32) on the following Max-Heap</strong></div>
                     <div id="q1-content" class="heap-wrapper"></div>
                 </div>
-
                 <div id="q2-tab" class="tab-content">
                     <div class="instruction-box"><strong>Apply Max_Heap_Extract_Max on the following Max-Heap <span style="color:red;">three times</span></strong></div>
                     <div id="q2-content" class="heap-wrapper"></div>
                 </div>
-
                 <div id="q3-tab" class="tab-content">
                     <div class="instruction-box"><strong>Apply Build-Max_Heap on array</strong></div>
                     <div id="q3-content" class="heap-wrapper"></div>
                 </div>
-
-                <!-- Q4: MERGE SUBROUTINE -->
+                <!-- Q4: MERGE SUBROUTINE — uses original version's dropdown approach -->
                 <div id="q4-tab" class="tab-content">
                     <div class="instruction-box" style="font-weight:bold; font-size:14px; background:white; border:none; padding-bottom:5px;">Merge(A, 1, 4, 8)</div>
                     <div id="q4-content" style="background:#eef5fa; padding: 20px; border: 1px solid #ccc; overflow-x: auto; width: fit-content; margin: 0 auto;"></div>
                 </div>
-
-                <!-- Q5: MERGE SORT TREE -->
+                <!-- Q5: MERGE SORT TREE — uses original version's absolute-positioned SVG approach -->
                 <div id="q5-tab" class="tab-content">
                     <div style="font-weight: bold; font-size:12px; margin-bottom: 20px; display:flex; justify-content:space-between; width: 600px;">
                         <span>Apply Merge_Sort algorithm on<br>array A.</span>
@@ -462,17 +364,13 @@
                     </div>
                     <div id="q5-content" class="q5-container"></div>
                 </div>
-
-                <!-- Q6: QUICK SORT -->
                 <div id="q6-tab" class="tab-content">
                     <div class="instruction-box">
                         <strong style="color:red;">Pivot will be the first element of the Partition</strong><br>
                         <strong>Note: QS means Quick_Sort, P means Partition</strong>
                     </div>
-                    <div id="q6-content" style="overflow-x: auto;"></div>
+                    <div id="q6-content" style="overflow-x: auto; height: 600px;"></div>
                 </div>
-
-                <!-- Q7: INSERTION SORT -->
                 <div id="q7-tab" class="tab-content">
                     <div class="instruction-box">Insert the elements <strong>8, 7, 3, 5, 6, 1, 4, 2</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong>.</div>
                     <table id="insertion-table">
@@ -480,8 +378,6 @@
                         <tbody id="insertion-body"></tbody>
                     </table>
                 </div>
-
-                <!-- Q8: BUBBLE SORT -->
                 <div id="q8-tab" class="tab-content">
                     <div class="instruction-box">Apply <strong style="color: red;">Bubble_Sort</strong> algorithm on array A: <strong>[8, 4, 10, 2, 5, 11, 6, 9]</strong></div>
                     <table id="bubble-table">
@@ -489,8 +385,6 @@
                         <tbody id="bubble-body"></tbody>
                     </table>
                 </div>
-
-                <!-- Q9: COMPLEXITIES -->
                 <div id="q9-tab" class="tab-content">
                     <div class="instruction-box"><strong>Drag and drop the correct items into the blanks. (Click a blank to clear it).</strong></div>
                     <div style="line-height: 3; font-size: 15px; background: white; padding: 20px; border: 1px solid #ccc;">
@@ -505,7 +399,6 @@
                         9- <input type="text" class="dd-drop" data-answer="Bubble Sort" readonly placeholder="Drop here"> algorithm has O(N^2) time complexity in all cases.<br>
                         10- Partition function in the <input type="text" class="dd-drop" data-answer="Quick Sort" readonly placeholder="Drop here"> has time complexity <input type="text" class="dd-drop" data-answer="O(N)" readonly placeholder="Drop here"> .<br>
                     </div>
-                    
                     <div class="drag-pool">
                         <div class="dd-drag" draggable="true">Quick Sort</div>
                         <div class="dd-drag" draggable="true">O(N)</div>
@@ -517,20 +410,15 @@
                         <div class="dd-drag" draggable="true">O(1)</div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
-
-    <!-- Global Controls -->
     <div class="controls">
         <button onclick="checkAnswers()">Check Answers</button>
         <button onclick="fillAnswers()" style="background-color: #6c757d;">Show Solution</button>
         <button class="clear-btn" onclick="clearAnswers()">Clear</button>
         <span id="feedback-msg" class="feedback"></span>
     </div>
-
     <script>
         // ==========================================
         // PORTAL AND TAB LOGIC
@@ -538,66 +426,45 @@
         function loadQuiz(quizId, btnElement) {
             document.querySelectorAll('.quiz-container').forEach(qc => qc.classList.remove('active'));
             document.querySelectorAll('.portal-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(quizId).classList.add('active');
             btnElement.classList.add('active');
-            
             const firstTabBtn = document.querySelector(`#${quizId} .tab-btn`);
             if(firstTabBtn) firstTabBtn.click();
         }
-
         function switchTab(tabId, btnElement, qNumber) {
             const activeQuiz = document.querySelector('.quiz-container.active');
             activeQuiz.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             activeQuiz.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(tabId).classList.add('active');
             btnElement.classList.add('active');
             document.getElementById('sidebar-q-num').innerText = qNumber;
             document.getElementById('feedback-msg').innerText = '';
         }
-
         // ==========================================
-        // GLOBAL VALIDATION CONTROLS
+        // GLOBAL VALIDATION
         // ==========================================
         function getActiveInputs() {
             const activeTab = document.querySelector('.quiz-container.active .tab-content.active');
             return activeTab.querySelectorAll('input[type="text"]:not([readonly="readonly"]), input.dd-drop, select');
         }
-
         function checkAnswers() {
             const inputs = getActiveInputs();
-            let allCorrect = true;
-            let requiresAnswerCount = 0;
-            let filledCount = 0;
-
+            let allCorrect = true, requiresAnswerCount = 0, filledCount = 0;
             inputs.forEach(input => {
                 input.classList.remove('correct', 'incorrect');
                 const val = input.value.trim().replace(/\s+/g, '').toLowerCase();
                 const ans = String(input.dataset.answer).replace(/\s+/g, '').toLowerCase();
-                
                 if (ans !== "") requiresAnswerCount++;
                 if (val !== "") filledCount++;
-
                 if (ans === "") {
-                    if (val !== "") {
-                        input.classList.add('incorrect');
-                        allCorrect = false;
-                    } else {
-                        input.classList.add('correct');
-                    }
+                    if (val !== "") { input.classList.add('incorrect'); allCorrect = false; }
+                    else { input.classList.add('correct'); }
                 } else {
-                    if (!val) {
-                        allCorrect = false;
-                    } else if (val === ans || (ans==='omega' && val==='ω') || (ans==='theta' && val==='θ')) { 
-                        input.classList.add('correct'); 
-                    } else { 
-                        input.classList.add('incorrect'); 
-                        allCorrect = false; 
-                    }
+                    if (!val) { allCorrect = false; }
+                    else if (val === ans || (ans==='omega' && val==='ω') || (ans==='theta' && val==='θ')) { input.classList.add('correct'); }
+                    else { input.classList.add('incorrect'); allCorrect = false; }
                 }
             });
-
             const feedback = document.getElementById('feedback-msg');
             if (filledCount === 0 && requiresAnswerCount > 0) {
                 feedback.innerText = "Try answering first!"; feedback.style.color = "#dc3545";
@@ -608,31 +475,21 @@
                 feedback.innerText = "Some answers are incorrect or missing. Keep trying!"; feedback.style.color = "#dc3545";
             }
         }
-
         function fillAnswers() {
-            getActiveInputs().forEach(input => {
-                input.value = input.dataset.answer;
-                input.classList.remove('correct', 'incorrect');
-            });
+            getActiveInputs().forEach(input => { input.value = input.dataset.answer; input.classList.remove('correct', 'incorrect'); });
             document.getElementById('feedback-msg').innerText = '';
         }
-
         function clearAnswers() {
-            getActiveInputs().forEach(input => {
-                input.value = '';
-                input.classList.remove('correct', 'incorrect');
-            });
+            getActiveInputs().forEach(input => { input.value = ''; input.classList.remove('correct', 'incorrect'); });
             document.getElementById('feedback-msg').innerText = '';
         }
-
         // ==========================================
-        // QUIZ 2 RENDERERS
+        // HEAP RENDERER
         // ==========================================
         const treeCoords = {
-            1: [400, 20], 2: [200, 80], 3: [600, 80], 4: [100, 150], 5: [300, 150], 6: [500, 150], 7: [700, 150],
-            8: [50, 220], 9: [150, 220], 10: [250, 220], 11: [350, 220]
+            1:[400,20],2:[200,80],3:[600,80],4:[100,150],5:[300,150],6:[500,150],7:[700,150],
+            8:[50,220],9:[150,220],10:[250,220],11:[350,220]
         };
-
         function renderHeap(containerId, data) {
             let html = '';
             data.forEach(step => {
@@ -640,204 +497,232 @@
                 if (step.title) html += `<div class="step-title">${step.title}</div>`;
                 if (step.meta) {
                     html += `<div style="display:flex; gap:15px; margin:10px 0; font-weight:bold; color:#c00000;">
-                        <span>i = </span> <input type="text" data-answer="${step.meta.i}" style="width:30px; height:20px; color:black;">
-                        <span>L = </span> <input type="text" data-answer="${step.meta.L}" style="width:30px; height:20px; color:black;">
-                        <span>R = </span> <input type="text" data-answer="${step.meta.R}" style="width:30px; height:20px; color:black;">
+                        <span>i = </span><input type="text" data-answer="${step.meta.i}" style="width:30px;height:20px;color:black;">
+                        <span>L = </span><input type="text" data-answer="${step.meta.L}" style="width:30px;height:20px;color:black;">
+                        <span>R = </span><input type="text" data-answer="${step.meta.R}" style="width:30px;height:20px;color:black;">
                     </div>`;
                 }
-
-                html += `<div class="heap-container"><svg width="800" height="240" style="position: absolute; top:0; left:0;">`;
+                html += `<div class="heap-container"><svg width="800" height="240" style="position:absolute;top:0;left:0;">`;
                 for (let i = 1; i <= n; i++) {
                     let p = treeCoords[i];
-                    if (2*i <= n) html += `<line x1="${p[0]}" y1="${p[1]+15}" x2="${treeCoords[2*i][0]}" y2="${treeCoords[2*i][1]-15}" stroke="black" stroke-width="1.5" />`;
-                    if (2*i+1 <= n) html += `<line x1="${p[0]}" y1="${p[1]+15}" x2="${treeCoords[2*i+1][0]}" y2="${treeCoords[2*i+1][1]-15}" stroke="black" stroke-width="1.5" />`;
+                    if (2*i<=n) html += `<line x1="${p[0]}" y1="${p[1]+15}" x2="${treeCoords[2*i][0]}" y2="${treeCoords[2*i][1]-15}" stroke="black" stroke-width="1.5"/>`;
+                    if (2*i+1<=n) html += `<line x1="${p[0]}" y1="${p[1]+15}" x2="${treeCoords[2*i+1][0]}" y2="${treeCoords[2*i+1][1]-15}" stroke="black" stroke-width="1.5"/>`;
                 }
                 html += `</svg>`;
-
                 for (let i = 0; i < n; i++) {
-                    let pos = treeCoords[i + 1];
-                    let val = step.array[i];
-                    if (step.isInteractive) html += `<input type="text" class="heap-node-input" style="left:${pos[0]}px; top:${pos[1]}px;" data-answer="${val}">`;
-                    else html += `<div class="heap-node-static" style="left:${pos[0]}px; top:${pos[1]}px;">${val}</div>`;
+                    let pos = treeCoords[i+1], val = step.array[i];
+                    if (step.isInteractive) html += `<input type="text" class="heap-node-input" style="left:${pos[0]}px;top:${pos[1]}px;" data-answer="${val}">`;
+                    else html += `<div class="heap-node-static" style="left:${pos[0]}px;top:${pos[1]}px;">${val}</div>`;
                 }
-                html += `</div>`;
-
-                html += `<table class="heap-array-table"><tr class="index-row">`;
-                for(let i=1; i<=n; i++) html += `<td>${i}</td>`;
+                html += `</div><table class="heap-array-table"><tr class="index-row">`;
+                for(let i=1;i<=n;i++) html += `<td>${i}</td>`;
                 html += `</tr><tr>`;
-                for(let i=0; i<n; i++) {
+                for(let i=0;i<n;i++) {
                     let val = step.array[i];
                     if (step.isInteractive) html += `<td><input type="text" data-answer="${val}"></td>`;
-                    else html += `<td style="font-weight:bold; background:#e2f0d9;">${val}</td>`;
+                    else html += `<td style="font-weight:bold;background:#e2f0d9;">${val}</td>`;
                 }
                 html += `</tr></table>`;
-                if(step.divider) html += `<hr style="margin: 30px 0; border: 1px solid #ccc;">`;
+                if(step.divider) html += `<hr style="margin:30px 0;border:1px solid #ccc;">`;
             });
             document.getElementById(containerId).innerHTML = html;
         }
-
         renderHeap('q1-content', [
-            { isInteractive: false, array: [35, 31, 35, 21, 29, 25, 11, 17, 20, 25, 15] },
-            { title: 'INCREASE-KEY(A, 8, 32)', isInteractive: true, array: [35, 32, 35, 31, 29, 25, 11, 21, 20, 25, 15] }
+            { isInteractive: false, array: [35,31,35,21,29,25,11,17,20,25,15] },
+            { title: 'INCREASE-KEY(A, 8, 32)', isInteractive: true, array: [35,32,35,31,29,25,11,21,20,25,15] }
         ]);
-
         renderHeap('q2-content', [
-            { isInteractive: false, array: [35, 31, 35, 21, 29, 25, 11, 17, 20, 25, 15] },
-            { title: '1: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [35, 31, 25, 21, 29, 15, 11, 17, 20, 25], divider: true },
-            { title: '2: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [31, 29, 25, 21, 25, 15, 11, 17, 20], divider: true },
-            { title: '3: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [29, 25, 25, 21, 20, 15, 11, 17] }
+            { isInteractive: false, array: [35,31,35,21,29,25,11,17,20,25,15] },
+            { title: '1: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [35,31,25,21,29,15,11,17,20,25], divider: true },
+            { title: '2: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [31,29,25,21,25,15,11,17,20], divider: true },
+            { title: '3: After applying Max_Heap_Extract_Max (A[]) the final Heap result is:', isInteractive: true, array: [29,25,25,21,20,15,11,17] }
         ]);
-
         renderHeap('q3-content', [
-            { title: 'A', isInteractive: false, array: [22, 21, 18, 8, 13, 30, 11, 10, 25, 19, 6], divider: true },
-            { title: 'Step 1: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 5, L: 10, R: 11}, isInteractive: true, array: [22, 21, 18, 8, 19, 30, 11, 10, 25, 13, 6], divider: true },
-            { title: 'Step 2: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 4, L: 8, R: 9}, isInteractive: true, array: [22, 21, 18, 25, 19, 30, 11, 10, 8, 13, 6], divider: true },
-            { title: 'Step 3: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 3, L: 6, R: 7}, isInteractive: true, array: [22, 21, 30, 25, 19, 18, 11, 10, 8, 13, 6], divider: true },
-            { title: 'Step 4: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 2, L: 4, R: 5}, isInteractive: true, array: [22, 25, 30, 21, 19, 18, 11, 10, 8, 13, 6], divider: true },
-            { title: 'Step 5: MAX-HEAPIFY(A, [ ], A.size)', meta: {i: 1, L: 2, R: 3}, isInteractive: true, array: [30, 25, 22, 21, 19, 18, 11, 10, 8, 13, 6] }
+            { title: 'A', isInteractive: false, array: [22,21,18,8,13,30,11,10,25,19,6], divider: true },
+            { title: 'Step 1: MAX-HEAPIFY(A, [ ], A.size)', meta:{i:5,L:10,R:11}, isInteractive: true, array: [22,21,18,8,19,30,11,10,25,13,6], divider: true },
+            { title: 'Step 2: MAX-HEAPIFY(A, [ ], A.size)', meta:{i:4,L:8,R:9}, isInteractive: true, array: [22,21,18,25,19,30,11,10,8,13,6], divider: true },
+            { title: 'Step 3: MAX-HEAPIFY(A, [ ], A.size)', meta:{i:3,L:6,R:7}, isInteractive: true, array: [22,21,30,25,19,18,11,10,8,13,6], divider: true },
+            { title: 'Step 4: MAX-HEAPIFY(A, [ ], A.size)', meta:{i:2,L:4,R:5}, isInteractive: true, array: [22,25,30,21,19,18,11,10,8,13,6], divider: true },
+            { title: 'Step 5: MAX-HEAPIFY(A, [ ], A.size)', meta:{i:1,L:2,R:3}, isInteractive: true, array: [30,25,22,21,19,18,11,10,8,13,6] }
         ]);
-
-        // Q4 MERGE SUBROUTINE - REBUILT TO MATCH EXACT VISUAL AND DROPDOWNS
+        // ==========================================
+        // Q4: MERGE SUBROUTINE — original dropdown version
+        // ==========================================
         function initQ4() {
-            const dropdownOptions = ["", "13", "16", "18", "20", "21", "23", "31", "∞", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            const dropdownOptions = ["","11","13","16","18","20","21","23","∞","1","2","3","4","5","6","7","8","9"];
             function genSelect(ans) {
                 let s = `<select data-answer="${ans}">`;
                 dropdownOptions.forEach(opt => s += `<option value="${opt}">${opt}</option>`);
                 s += `</select>`; return s;
             }
-
-            let L = ["31", "16", "18", "23", "∞"], R = ["13", "16", "20", "21", "∞"];
-            let A = ["31", "16", "18", "23", "13", "16", "20", "21"]; // Initial unsorted layout required by the image
+            // Data from original version
+            let L = ["11","16","18","23","∞"];
+            let R = ["13","16","20","21","∞"];
+            let A = ["11","16","18","23","13","16","20","21"];
             let currentI = 1, currentJ = 1;
             let html = '';
-
             for(let step = 0; step <= 8; step++) {
                 if (step > 0) {
                     html += `<div class="dashed-divider"></div>`;
                     if (L[currentI-1] !== '∞' && (R[currentJ-1] === '∞' || parseInt(L[currentI-1]) <= parseInt(R[currentJ-1]))) {
                         A[step-1] = L[currentI-1]; currentI++;
-                    } else { A[step-1] = R[currentJ-1]; currentJ++; }
+                    } else {
+                        A[step-1] = R[currentJ-1]; currentJ++;
+                    }
                 }
-
                 let k_val = step === 0 ? 1 : step + 1;
-
                 html += `<div class="merge-sub-step">`;
-                if (step > 0) html += `<div style="position:absolute; left:0; top:20px; font-weight:bold; color:#777; font-size:14px;">Step ${step}</div>`;
-                
+                if (step > 0) html += `<div style="position:absolute;left:0;top:20px;font-weight:bold;color:#777;font-size:14px;">Step ${step}</div>`;
                 // Array A
-                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
-                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">A</span>`;
+                html += `<div style="display:flex;align-items:flex-end;gap:5px;">`;
+                html += `<span style="font-weight:bold;color:#c00000;margin-bottom:10px;">A</span>`;
                 html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead><tbody><tr>`;
                 if (step === 0) {
-                    A.forEach(val => html += `<td>${val}</td>`); 
+                    // Step 0: show A as static blue text (no dropdowns)
+                    A.forEach(val => html += `<td>${val}</td>`);
                 } else {
+                    // Steps 1-8: show A with dropdowns
                     A.forEach(val => html += `<td>${genSelect(val)}</td>`);
                 }
                 html += `</tr></tbody></table></div>`;
-                
                 // k pointer
-                html += `<div class="q4-pointer" style="margin-left:-360px; margin-top:5px;">k= ${genSelect(k_val)}</div>`;
-                
-                // Sub arrays L & R
-                html += `<div style="display:flex; gap: 80px; margin-top: 15px;">`;
-                
-                html += `<div style="display:flex; flex-direction:column; align-items:flex-start;">`;
-                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
-                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">L</span>`;
+                html += `<div class="q4-pointer" style="margin-left:-360px;margin-top:5px;">k= ${genSelect(k_val)}</div>`;
+                // L and R arrays
+                html += `<div style="display:flex;gap:80px;margin-top:15px;">`;
+                // L array
+                html += `<div style="display:flex;flex-direction:column;align-items:flex-start;">`;
+                html += `<div style="display:flex;align-items:flex-end;gap:5px;">`;
+                html += `<span style="font-weight:bold;color:#c00000;margin-bottom:10px;">L</span>`;
                 html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr>`;
                 L.forEach(val => html += `<td>${genSelect(val)}</td>`);
                 html += `</tr></tbody></table></div>`;
-                html += `<div class="q4-pointer" style="margin-top:5px; margin-left:-25px;">i= ${genSelect(currentI)}</div>`;
+                html += `<div class="q4-pointer" style="margin-top:5px;margin-left:-25px;">i= ${genSelect(currentI)}</div>`;
                 html += `</div>`;
-
-                html += `<div style="display:flex; flex-direction:column; align-items:flex-start;">`;
-                html += `<div style="display:flex; align-items:flex-end; gap:5px;">`;
-                html += `<span style="font-weight:bold; color:#c00000; margin-bottom:10px;">R</span>`;
+                // R array
+                html += `<div style="display:flex;flex-direction:column;align-items:flex-start;">`;
+                html += `<div style="display:flex;align-items:flex-end;gap:5px;">`;
+                html += `<span style="font-weight:bold;color:#c00000;margin-bottom:10px;">R</span>`;
                 html += `<table class="merge-arr-table"><thead><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr>`;
                 R.forEach(val => html += `<td>${genSelect(val)}</td>`);
                 html += `</tr></tbody></table></div>`;
-                html += `<div class="q4-pointer" style="margin-top:5px; margin-left:-25px;">j= ${genSelect(currentJ)}</div>`;
+                html += `<div class="q4-pointer" style="margin-top:5px;margin-left:-25px;">j= ${genSelect(currentJ)}</div>`;
                 html += `</div>`;
-
                 html += `</div></div>`;
             }
             document.getElementById('q4-content').innerHTML = html;
         }
         initQ4();
-
-        // Q5 MERGE TREE - REBUILT TO MATCH EXACT VISUAL GEOMETRY
+        // ==========================================
+        // Q5: MERGE SORT TREE — absolute SVG with SELECT dropdowns
+        // ==========================================
         function initQ5() {
-            let html = `<svg width="900" height="1100" style="position: absolute; top:0; left:0; z-index:1;">`;
-            function line(x1, y1, x2, y2) { html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black" stroke-width="1.5" />`; }
-            
-            // Draw all split lines exactly
-            line(450, 70, 450, 100); line(250, 100, 650, 100); line(250, 100, 250, 130); line(650, 100, 650, 130); 
-            line(250, 160, 250, 190); line(150, 190, 350, 190); line(150, 190, 150, 220); line(350, 190, 350, 220); 
-            line(650, 160, 650, 190); line(550, 190, 750, 190); line(550, 190, 550, 220); line(750, 190, 750, 220); 
-            line(150, 250, 150, 280); line(110, 280, 190, 280); line(110, 280, 110, 310); line(190, 280, 190, 310); 
-            line(350, 250, 350, 280); line(310, 280, 390, 280); line(310, 280, 310, 310); line(390, 280, 390, 310);
-            line(550, 250, 550, 280); line(510, 280, 590, 280); line(510, 280, 510, 310); line(590, 280, 590, 310);
-            line(750, 250, 750, 280); line(710, 280, 790, 280); line(710, 280, 710, 310); line(790, 280, 790, 310);
-            
-            // Draw merge lines exactly
-            line(110, 340, 110, 370); line(190, 340, 190, 370); line(110, 370, 190, 370); line(150, 370, 150, 400); 
-            line(310, 340, 310, 370); line(390, 340, 390, 370); line(310, 370, 390, 370); line(350, 370, 350, 400);
-            line(510, 340, 510, 370); line(590, 340, 590, 370); line(510, 370, 590, 370); line(550, 370, 550, 400);
-            line(710, 340, 710, 370); line(790, 340, 790, 370); line(710, 370, 790, 370); line(750, 370, 750, 400);
-            line(150, 430, 150, 480); line(350, 430, 350, 480); line(550, 430, 550, 480); line(750, 430, 750, 480); 
-            line(150, 510, 150, 540); line(350, 510, 350, 540); line(150, 540, 350, 540); line(250, 540, 250, 570); 
-            line(550, 510, 550, 540); line(750, 510, 750, 540); line(550, 540, 750, 540); line(650, 540, 650, 570);
-            line(250, 600, 250, 650); line(650, 600, 650, 650); 
-            line(250, 680, 250, 720); line(650, 680, 650, 720); line(250, 720, 650, 720); line(450, 720, 450, 750); 
-            line(450, 780, 450, 830); 
-            line(450, 860, 450, 910); 
+            const q5Options = ["","14","16","19","22","25","32","38","56"];
+            function genSelect(ans, styleClass) {
+                // Pick background/color based on style class
+                let bg = 'white', color = '#0066cc';
+                if (styleClass === 'red-yellow') { bg = '#ffff99'; color = 'red'; }
+                else if (styleClass === 'blue-yellow') { bg = '#ffff99'; color = '#0066cc'; }
+                let s = `<select data-answer="${ans}" style="width:40px;height:30px;border:none;font-weight:bold;text-align:center;background:${bg};color:${color};border-radius:0;appearance:none;-webkit-appearance:none;cursor:pointer;font-size:13px;">`;
+                q5Options.forEach(opt => s += `<option value="${opt}">${opt}</option>`);
+                s += `</select>`; return s;
+            }
+            // SVG drawn BEHIND nodes (z-index:0), nodes at z-index:2
+            let html = `<svg width="900" height="1100" style="position:absolute;top:0;left:0;z-index:0;pointer-events:none;">`;
+            function line(x1,y1,x2,y2) { html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black" stroke-width="1.5"/>`; }
+            // Split lines level 1→2
+            line(450,70,450,100); line(250,100,650,100); line(250,100,250,130); line(650,100,650,130);
+            // Split lines level 2→3 (L side)
+            line(250,160,250,190); line(150,190,350,190); line(150,190,150,220); line(350,190,350,220);
+            // Split lines level 2→3 (R side)
+            line(650,160,650,190); line(550,190,750,190); line(550,190,550,220); line(750,190,750,220);
+            // Split lines level 3→4
+            line(150,250,150,280); line(110,280,190,280); line(110,280,110,310); line(190,280,190,310);
+            line(350,250,350,280); line(310,280,390,280); line(310,280,310,310); line(390,280,390,310);
+            line(550,250,550,280); line(510,280,590,280); line(510,280,510,310); line(590,280,590,310);
+            line(750,250,750,280); line(710,280,790,280); line(710,280,710,310); line(790,280,790,310);
+            // Merge lines level 4→5
+            line(110,340,110,370); line(190,340,190,370); line(110,370,190,370); line(150,370,150,400);
+            line(310,340,310,370); line(390,340,390,370); line(310,370,390,370); line(350,370,350,400);
+            line(510,340,510,370); line(590,340,590,370); line(510,370,590,370); line(550,370,550,400);
+            line(710,340,710,370); line(790,340,790,370); line(710,370,790,370); line(750,370,750,400);
+            // Straight level 5→6
+            line(150,430,150,480); line(350,430,350,480); line(550,430,550,480); line(750,430,750,480);
+            // Merge lines level 6→7
+            line(150,510,150,540); line(350,510,350,540); line(150,540,350,540); line(250,540,250,570);
+            line(550,510,550,540); line(750,510,750,540); line(550,540,750,540); line(650,540,650,570);
+            // Straight level 7→8
+            line(250,600,250,650); line(650,600,650,650);
+            // Merge lines level 8→9
+            line(250,680,250,720); line(650,680,650,720); line(250,720,650,720); line(450,720,450,750);
+            // Straight level 9→10
+            line(450,780,450,830);
+            // Straight level 10→11
+            line(450,860,450,910);
             html += `</svg>`;
-
+            // Nodes rendered at z-index:2 so they sit above the SVG
             function renderGroup(x, y, vals, styleClass, isStatic=false) {
                 let w = vals.length * 40;
-                let gHtml = `<div class="q5-node" style="left:${x}px; top:${y}px; width:${w}px;">`;
+                let gHtml = `<div class="q5-node" style="left:${x}px;top:${y}px;width:${w}px;z-index:2;">`;
                 vals.forEach(val => {
-                    if (isStatic) gHtml += `<div class="q5-cell">${val}</div>`;
-                    else gHtml += `<div class="q5-cell" style="padding:2px;"><input type="text" class="q5-input ${styleClass}" data-answer="${val}"></div>`;
+                    if (isStatic) {
+                        gHtml += `<div class="q5-cell">${val}</div>`;
+                    } else {
+                        gHtml += `<div class="q5-cell" style="padding:0;">${genSelect(val, styleClass)}</div>`;
+                    }
                 });
                 gHtml += `</div>`; return gHtml;
             }
-
-            // Levels strictly aligned to matches lines
-            html += `<div style="position:absolute; left:230px; top:40px; font-weight:bold; font-size:12px;">Step 1: Merge_Sort 1</div>`;
+            // Level 1: Static
+            html += `<div style="position:absolute;left:230px;top:40px;font-weight:bold;font-size:12px;z-index:2;">Step 1: Merge_Sort 1</div>`;
             html += renderGroup(450, 40, [16,22,14,38,25,56,32,19], '', true);
-            
-            html += `<div style="position:absolute; left:230px; top:130px; font-weight:bold; font-size:12px;">Step 2: Merge_Sort 2</div>`;
+            // Level 2
+            html += `<div style="position:absolute;left:230px;top:130px;font-weight:bold;font-size:12px;z-index:2;">Step 2: Merge_Sort 2</div>`;
             html += renderGroup(250, 130, [16,22,14,38], '', true);
-            html += renderGroup(550, 130, [25,56], 'blue'); html += renderGroup(750, 130, [32,19], 'blue');
-
-            html += `<div style="position:absolute; left:230px; top:220px; font-weight:bold; font-size:12px;">Step 3:<br>Merge_Sort 3</div>`;
-            html += renderGroup(150, 220, [16,22], 'blue'); html += renderGroup(350, 220, [14,38], 'blue');
-            html += renderGroup(550, 220, [25,56], 'blue'); html += renderGroup(750, 220, [32,19], 'blue');
-
-            html += renderGroup(110, 310, [16], 'blue'); html += renderGroup(190, 310, [22], 'blue');
-            html += renderGroup(310, 310, [14], 'blue'); html += renderGroup(390, 310, [38], 'blue');
-            html += renderGroup(510, 310, [25], 'blue'); html += renderGroup(590, 310, [56], 'blue');
-            html += renderGroup(710, 310, [32], 'blue'); html += renderGroup(790, 310, [19], 'blue');
-
-            html += renderGroup(150, 400, [16,22], 'blue'); html += renderGroup(350, 400, [14,38], 'blue');
-            html += renderGroup(550, 400, [25,56], 'blue'); html += renderGroup(750, 400, [32,19], 'blue');
-
-            html += renderGroup(150, 480, [16,22], 'red-yellow'); html += renderGroup(350, 480, [14,38], 'red-yellow');
-            html += renderGroup(550, 480, [25,56], 'red-yellow'); html += renderGroup(750, 480, [19,32], 'red-yellow');
-
-            html += renderGroup(250, 570, [16,22,14,38], 'blue'); html += renderGroup(650, 570, [25,56,19,32], 'blue');
-            html += renderGroup(250, 650, [14,16,22,38], 'red-yellow'); html += renderGroup(650, 650, [19,25,32,56], 'red-yellow');
+            html += renderGroup(650, 130, [25,56,32,19], 'blue');
+            // Level 3
+            html += `<div style="position:absolute;left:230px;top:220px;font-weight:bold;font-size:12px;z-index:2;">Step 3:<br>Merge_Sort 3</div>`;
+            html += renderGroup(150, 220, [16,22], 'blue');
+            html += renderGroup(350, 220, [14,38], 'blue');
+            html += renderGroup(550, 220, [25,56], 'blue');
+            html += renderGroup(750, 220, [32,19], 'blue');
+            // Level 4 (individual elements)
+            html += renderGroup(110, 310, [16], 'blue');
+            html += renderGroup(190, 310, [22], 'blue');
+            html += renderGroup(310, 310, [14], 'blue');
+            html += renderGroup(390, 310, [38], 'blue');
+            html += renderGroup(510, 310, [25], 'blue');
+            html += renderGroup(590, 310, [56], 'blue');
+            html += renderGroup(710, 310, [32], 'blue');
+            html += renderGroup(790, 310, [19], 'blue');
+            // Level 5 (merge back, unsorted pairs)
+            html += renderGroup(150, 400, [16,22], 'blue');
+            html += renderGroup(350, 400, [14,38], 'blue');
+            html += renderGroup(550, 400, [25,56], 'blue');
+            html += renderGroup(750, 400, [32,19], 'blue');
+            // Level 6 (sorted pairs, yellow+red)
+            html += renderGroup(150, 480, [16,22], 'red-yellow');
+            html += renderGroup(350, 480, [14,38], 'red-yellow');
+            html += renderGroup(550, 480, [25,56], 'red-yellow');
+            html += renderGroup(750, 480, [19,32], 'red-yellow');
+            // Level 7 (merge 4, unsorted)
+            html += renderGroup(250, 570, [16,22,14,38], 'blue');
+            html += renderGroup(650, 570, [25,56,19,32], 'blue');
+            // Level 8 (sorted 4, yellow+red)
+            html += renderGroup(250, 650, [14,16,22,38], 'red-yellow');
+            html += renderGroup(650, 650, [19,25,32,56], 'red-yellow');
+            // Level 9 (merge 8, unsorted)
             html += renderGroup(450, 750, [14,16,22,38,19,25,32,56], 'blue');
+            // Level 10 (sorted 8, yellow+red)
             html += renderGroup(450, 830, [14,16,19,22,25,32,38,56], 'red-yellow');
+            // Level 11 (final, yellow+blue)
             html += renderGroup(450, 910, [14,16,19,22,25,32,38,56], 'blue-yellow');
-            html += `<div style="position:absolute; left:180px; top:960px; font-size:12px; color:#c00000;">Please answer all parts of the question.</div>`;
-
+            html += `<div style="position:absolute;left:180px;top:960px;font-size:12px;color:#c00000;z-index:2;">Please answer all parts of the question.</div>`;
             document.getElementById('q5-content').innerHTML = html;
         }
         initQ5();
-
-        // QUICK SORT - ACTUAL ALGORITHM TRACE
+        // ==========================================
+        // Q6: QUICK SORT
+        // ==========================================
         function initQ6() {
             const rows = [
                 { alg: 'Quick_Sort1', op: 'Left >= Right X', arr: [23,22,40,16,13,33,26], mode: 'static' },
@@ -886,24 +771,26 @@
         }
         initQ6();
 
-        // Q7 INSERTION SORT
+        // ==========================================
+        // Q7: INSERTION SORT
+        // ==========================================
         function generateInsertionTable() {
-            const elements = [8, 7, 3, 5, 6, 1, 4, 2];
+            const elements = [8,7,3,5,6,1,4,2];
             const tbody = document.getElementById('insertion-body');
             let arr = [];
             for (let i = 0; i < elements.length; i++) {
-                let key = elements[i]; let steps = []; let j = arr.length - 1;
-                if (j < 0 || arr[j] <= key) { steps.push([...arr, key]); arr.push(key); } 
+                let key = elements[i], steps = [], j = arr.length - 1;
+                if (j < 0 || arr[j] <= key) { steps.push([...arr, key]); arr.push(key); }
                 else {
                     let current = [...arr, arr[j]]; steps.push([...current]);
-                    while (j >= 0 && arr[j] > key) { current[j] = (j - 1 >= 0 && arr[j-1] > key) ? arr[j-1] : key; steps.push([...current]); j--; }
+                    while (j >= 0 && arr[j] > key) { current[j] = (j-1>=0 && arr[j-1]>key) ? arr[j-1] : key; steps.push([...current]); j--; }
                     arr.length = 0; arr.push(...current);
                 }
                 steps.forEach((stepArr, s) => {
                     let tr = document.createElement('tr');
                     if (s === 0) tr.innerHTML = `<td class="insert-col" rowspan="${steps.length}">${key}</td>`;
                     for (let c = 0; c < elements.length; c++) {
-                        if (c < stepArr.length) tr.innerHTML += (i === 0 && c === 0) ? `<td style="background:#e2f0d9;">${stepArr[c]}</td>` : `<td><input type="text" data-answer="${stepArr[c]}"></td>`;
+                        if (c < stepArr.length) tr.innerHTML += (i===0&&c===0) ? `<td style="background:#e2f0d9;">${stepArr[c]}</td>` : `<td><input type="text" data-answer="${stepArr[c]}"></td>`;
                         else tr.innerHTML += `<td class="empty-cell"></td>`;
                     }
                     tbody.appendChild(tr);
@@ -916,47 +803,54 @@
             tbody.appendChild(finalTr);
         }
         generateInsertionTable();
-
-        // Q8 BUBBLE SORT
+        // ==========================================
+        // Q8: BUBBLE SORT
+        // ==========================================
         function generateBubbleTable() {
-            const initialArr = [8, 4, 10, 2, 5, 11, 6, 9];
+            const initialArr = [8,4,10,2,5,11,6,9];
             let arr = [...initialArr];
             const tbody = document.getElementById('bubble-body');
-            tbody.innerHTML += `<tr><td class="bubble-title-cell" colspan="2">Bubble_Sort(<br>A[], 1, 8 )</td>` + initialArr.map(v => `<td style="font-weight:bold; background:#e2f0d9;">${v}</td>`).join('') + `</tr>`;
+            tbody.innerHTML += `<tr><td class="bubble-title-cell" colspan="2">Bubble_Sort(<br>A[], 1, 8 )</td>` + initialArr.map(v=>`<td style="font-weight:bold;background:#e2f0d9;">${v}</td>`).join('') + `</tr>`;
             let passNum = 1;
             for (let i = 0; i < initialArr.length - 1; i++) {
                 let stepsInPass = initialArr.length - i - 1;
                 for (let j = 0; j < stepsInPass; j++) {
-                    let trClass = j === stepsInPass - 1 ? 'pass-end' : '';
-                    let passCol = j === 0 ? `<td rowspan="${stepsInPass}" class="bubble-pass-col">${passNum}</td>` : '';
-                    if (arr[j] > arr[j+1]) [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
-                    let opCol = (passNum === 1 && j === 0) ? `<td class="bubble-op-col"><span style="font-size: 11px;">(A[1] > A[2])<br>&rarr;Swap(A[1],A[2])</span></td>` : `<td class="bubble-op-col"></td>`;
-                    let arrCols = arr.map(v => (passNum === 1 && j === 0) ? `<td style="font-weight:bold; background:#e2f0d9;">${v}</td>` : `<td><input type="text" data-answer="${v}"></td>`).join('');
+                    let trClass = j===stepsInPass-1 ? 'pass-end' : '';
+                    let passCol = j===0 ? `<td rowspan="${stepsInPass}" class="bubble-pass-col">${passNum}</td>` : '';
+                    let opCol = '';
+                    if (arr[j] > arr[j+1]) {
+                        opCol = `<td class="bubble-op-col"><span style="font-size:11px;">(A[${j+1}]>A[${j+2}])<br>&rarr;Swap(A[${j+1}],A[${j+2}])</span></td>`;
+                        [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+                    } else {
+                        opCol = `<td class="bubble-op-col"><span style="font-size:11px;">(A[${j+1}]>A[${j+2}]) X</span></td>`;
+                    }
+                    let arrCols = arr.map(v=>`<td><input type="text" data-answer="${v}"></td>`).join('');
                     tbody.innerHTML += `<tr class="${trClass}">${passCol}${opCol}${arrCols}</tr>`;
                 }
                 passNum++;
             }
-            tbody.innerHTML += `<tr class="done-row-bubble"><td class="bubble-title-cell" colspan="2">Result<br>Sorted Array</td>` + arr.map(v => `<td><input type="text" data-answer="${v}"></td>`).join('') + `</tr>`;
+            tbody.innerHTML += `<tr class="done-row-bubble"><td class="bubble-title-cell" colspan="2">Result<br>Sorted Array</td>` + arr.map(v=>`<td><input type="text" data-answer="${v}"></td>`).join('') + `</tr>`;
         }
         generateBubbleTable();
-
-        // Drag and Drop Initializer
+        // ==========================================
+        // DRAG AND DROP
+        // ==========================================
         function initDragAndDrop() {
             document.querySelectorAll('.dd-drag').forEach(item => {
                 item.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', e.target.innerText); });
             });
             document.querySelectorAll('.dd-drop').forEach(dropZone => {
                 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-                dropZone.addEventListener('dragleave', e => { dropZone.classList.remove('drag-over'); });
+                dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
                 dropZone.addEventListener('drop', e => {
                     e.preventDefault(); dropZone.classList.remove('drag-over');
-                    dropZone.value = e.dataTransfer.getData('text/plain'); dropZone.classList.remove('correct', 'incorrect');
+                    dropZone.value = e.dataTransfer.getData('text/plain');
+                    dropZone.classList.remove('correct','incorrect');
                 });
-                dropZone.addEventListener('click', e => { dropZone.value = ''; dropZone.classList.remove('correct', 'incorrect'); });
+                dropZone.addEventListener('click', () => { dropZone.value = ''; dropZone.classList.remove('correct','incorrect'); });
             });
         }
         initDragAndDrop();
-
     </script>
 </body>
 </html>
