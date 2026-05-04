@@ -158,7 +158,6 @@
         /* Q6 */
         .qs-table { border: 2px solid #555; background: #dce6f1; }
         .qs-table select { width: 50px; text-align: center; }
-        .qs-pointer-row td { border: none; padding: 2px; height: 25px; }
     </style>
 </head>
 <body>
@@ -369,7 +368,7 @@
                         <strong style="color:red;">Pivot will be the first element of the Partition</strong><br>
                         <strong>Note: QS means Quick_Sort, P means Partition</strong>
                     </div>
-                    <div id="q6-content" style="overflow-x: auto; height: 600px;"></div>
+                    <div id="q6-content" style="overflow-x: auto; padding-bottom: 30px;"></div>
                 </div>
                 <div id="q7-tab" class="tab-content">
                     <div class="instruction-box">Insert the elements <strong>8, 7, 3, 5, 6, 1, 4, 2</strong> into an <u>empty array</u> using <strong style="color: red;">Insertion_Sort</strong>.</div>
@@ -725,52 +724,123 @@
         // ==========================================
         function initQ6() {
             const rows = [
-                { alg: 'Quick_Sort1', op: 'Left >= Right X', arr: [23,22,40,16,13,33,26], mode: 'static' },
-                { alg: 'Quick_Sort1', op: 'Pivot_index=Partition(A[],1,7)', arr: [23,22,40,16,13,33,26], mode: 'static' },
-                { alg: 'Partition1', op: 'Povit=A[1]=23 L=2 R=7 .', arr: [23,22,40,16,13,33,26], mode: 'static' },
-                { alg: '', op: 'L <= R √', arr: ['','L','','','','','R'], mode: 'ptr' },
-                { alg: '', op: '22 <= Povit √', arr: ['','','L','','','','R'], mode: 'ptr' },
-                { alg: '', op: '', arr: ['','','L','','','R',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','L','','R','',''], mode: 'input' },
-                { alg: '', op: '', arr: [23,22,13,16,40,33,26], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','L','R','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','L R','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','R','L','',''], mode: 'input' },
-                { alg: '', op: '', arr: [16,22,13,23,40,33,26], mode: 'input' },
-                { alg: '', op: '', arr: ['','L','R','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: [16,13,22,23,40,33,26], mode: 'input' },
-                { alg: '', op: '', arr: ['','L R','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: ['R','L','','','','',''], mode: 'input' },
-                { alg: '', op: '', arr: [13,16,22,23,40,33,26], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','L','R'], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','','L R'], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','','R'], mode: 'input' },
-                { alg: '', op: '', arr: [13,16,22,23,26,33,40], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','','L R',''], mode: 'input' },
-                { alg: '', op: '', arr: ['','','','','R','L',''], mode: 'input' },
-                { alg: '', op: 'Result Sorted Array', arr: [13,16,22,23,26,33,40], mode: 'input' }
+                // 1
+                ["Quick_Sort1", "Left >= Right X", "23", "22", "40", "16", "13", "33", "26"],
+                // 2
+                ["Quick_Sort1", "Pivot_index=Partition(A[],1,7)", "23", "22", "40", "16", "13", "33", "26"],
+                // 3
+                ["Partition1", "Povit=A[1]=23 L=2 R=7 .", "23", "22", "40", "16", "13", "33", "26"],
+                // 4
+                ["", "L <= R √", "", "L", "", "", "", "", "R"],
+                // 5
+                ["", "22 <= Povit √", "", "", "L", "", "", "", "R"],
+                // 6
+                ["", "", "", "", "L", "", "", "R", ""], 
+                // 7
+                ["", "", "", "", "L", "", "R", "", ""],
+                // 8
+                ["", "", "23", "22", "13", "16", "40", "33", "26"],
+                // 9
+                ["", "", "", "", "", "L", "R", "", ""],
+                // 10
+                ["", "", "", "", "", "", "L R", "", ""],
+                // 11
+                ["", "", "", "", "", "R", "L", "", ""],
+                // 12
+                ["", "", "16", "22", "13", "23", "40", "33", "26"],
+                // 13
+                ["", "", "", "L", "R", "", "", "", ""],
+                // 14
+                ["", "", "16", "13", "22", "23", "40", "33", "26"],
+                // 15
+                ["", "", "", "", "L R", "", "", "", ""],
+                // 16
+                ["", "", "", "R", "L", "", "", "", ""],
+                // 17
+                ["", "", "13", "16", "22", "23", "40", "33", "26"],
+                // 18
+                ["", "", "", "", "", "", "", "L", "R"],
+                // 19
+                ["", "", "", "", "", "", "", "", "L R"],
+                // 20
+                ["", "", "", "", "", "", "", "", "R"],
+                // 21
+                ["", "", "13", "16", "22", "23", "26", "33", "40"],
+                // 22
+                ["", "", "", "", "", "", "", "L R", ""],
+                // 23
+                ["", "", "", "", "", "", "R", "L", ""],
+                // 24
+                ["", "Result Sorted Array", "13", "16", "22", "23", "26", "33", "40"]
             ];
-            const qsOptions = ["", "13", "16", "22", "23", "26", "33", "40", "L", "R", "L R", "R L"];
-            let html = `<table class="qs-table"><thead><tr><th>Algorithm</th><th>Operation</th><th colspan="7">Array</th></tr><tr><th></th><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>`;
-            rows.forEach(r => {
-                let trClass = r.mode === 'ptr' ? 'qs-pointer-row' : '';
-                html += `<tr class="${trClass}"><td>${r.alg}</td><td style="font-size:12px;">${r.op}</td>`;
-                r.arr.forEach(val => {
-                    if (r.mode === 'static') html += `<td style="background:#e2f0d9;">${val}</td>`;
-                    else if (r.mode === 'ptr') html += `<td>${val ? `<strong>${val}</strong>` : ''}</td>`;
-                    else {
+            
+            const qsOptions = ["", "13", "16", "22", "23", "26", "33", "40", "L", "R", "L R", "R L", "↑R", "↑L"];
+            
+            let html = `<table class="qs-table" style="border: 2px solid black; border-collapse: collapse; background: #dce6f1; text-align: center; margin: 0 auto;">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="border: 1px solid black; padding: 5px; background: #d9d9d9;">Algorithm</th>
+                        <th rowspan="2" style="border: 1px solid black; padding: 5px; background: #d9d9d9;">Operation</th>
+                        <th colspan="7" style="border: 1px solid black; padding: 5px; background: #d9d9d9;">Array</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">1</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">2</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">3</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">4</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">5</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">6</th>
+                        <th style="border: 1px solid black; background: #d9d9d9; width: 50px;">7</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            
+            rows.forEach((r, idx) => {
+                let isHeaderRow = (idx < 3);
+                let isResultRow = (idx === 23);
+                let trStyle = isHeaderRow ? 'background:#e2f0d9;' : '';
+                
+                html += `<tr style="${trStyle}">`;
+                
+                // Col 1: Algorithm
+                if (isHeaderRow || isResultRow) {
+                    html += `<td style="border: 1px solid black; padding: 4px; ${isHeaderRow ? 'background:#e2f0d9;' : 'background:#dce6f1;'}">${r[0]}</td>`;
+                } else {
+                    html += `<td style="border: none; padding: 2px;">${r[0]}</td>`;
+                }
+                
+                // Col 2: Operation
+                if (isHeaderRow || isResultRow) {
+                    html += `<td style="border: 1px solid black; font-size:12px; padding: 4px; ${isHeaderRow ? 'background:#e2f0d9;' : 'background:#dce6f1;'}">${r[1]}</td>`;
+                } else {
+                    html += `<td style="border: none; font-size:12px; font-weight:bold; padding: 2px;">${r[1]}</td>`;
+                }
+                
+                // Cols 3-9: Array
+                for(let i = 2; i < 9; i++) {
+                    let val = r[i];
+                    if (isHeaderRow || isResultRow) {
+                        html += `<td style="border: 1px solid black; padding: 4px; background:#e2f0d9;">${val}</td>`;
+                    } else if (val !== "" && !isNaN(val) && idx !== 23) {
+                        // Intermediate Array rows that should be inputs
                         let selectHtml = `<select data-answer="${val}">`;
                         qsOptions.forEach(opt => { selectHtml += `<option value="${opt}">${opt}</option>`; });
-                        selectHtml += `</select>`; html += `<td>${selectHtml}</td>`;
+                        selectHtml += `</select>`;
+                        html += `<td style="border: 1px solid black; padding: 2px; background: #dce6f1;">${selectHtml}</td>`;
+                    } else {
+                        // Dropdown pointer rows
+                        let selectHtml = `<select data-answer="${val}">`;
+                        qsOptions.forEach(opt => { selectHtml += `<option value="${opt}">${opt}</option>`; });
+                        selectHtml += `</select>`;
+                        html += `<td style="border: 1px solid black; padding: 2px; background: #dce6f1;">${selectHtml}</td>`;
                     }
-                });
+                }
                 html += `</tr>`;
             });
             html += `</tbody></table>`;
             document.getElementById('q6-content').innerHTML = html;
         }
         initQ6();
-
         // ==========================================
         // Q7: INSERTION SORT
         // ==========================================
